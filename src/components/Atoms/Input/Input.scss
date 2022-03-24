@@ -1,0 +1,21 @@
+@use "./../../../variables" as variables;
+.input {
+	display: flex;
+	align-items: center;
+	border-radius: 6px;
+	height: 22px;
+	width: 200px;
+	background-color: variables.$input;
+	border: 1px solid variables.$color;
+	outline: none;
+	input {
+		width: 200px;
+		height: 20px;
+		color: variables.$color;
+		border: none;
+		background-color: transparent;
+		&::placeholder {
+			color: variables.$border;
+		}
+	}
+}

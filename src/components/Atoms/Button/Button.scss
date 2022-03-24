@@ -1,0 +1,15 @@
+@use "./../../../variables" as variables;
+
+.button {
+	background-color: #94b3fd;
+	border: 1px solid variables.$border;
+	border-radius: 6px;
+	height: 20px;
+	width: 40px;
+	button {
+		height: 20px;
+		width: 40px;
+		background-color: transparent;
+		border: none;
+	}
+}

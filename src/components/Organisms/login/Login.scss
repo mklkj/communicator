@@ -1,0 +1,12 @@
+@use "./../../../variables" as variables;
+.login {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	background-color: variables.$background;
+	&-input {
+		margin: 0 0 20px 0;
+	}
+}
