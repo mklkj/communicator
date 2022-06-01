@@ -3,10 +3,11 @@
 	align-items: center;
 	justify-content: space-between;
 	margin: 6px 0;
-	width: 100%;
+	width: calc(100% - 6px);
 	background: #181717;
 	color: white;
 	height: 40px;
 	font-size: 16px;
 	border-bottom: 1px solid #3a3a3a;
+	padding: 0 0 0 6px;
 }
