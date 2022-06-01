@@ -1,0 +1,24 @@
+.header {
+	background-color: #181717;
+	height: 5vh;
+	color: white;
+	position: relative;
+	width: 100%;
+	top: 0;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	z-index: 99;
+	padding: 10px;
+	box-sizing: border-box;
+	&-menu {
+		cursor: pointer;
+		user-select: none;
+		&-x {
+			font-size: 17px;
+		}
+		&-hamburger {
+			font-size: 20px;
+		}
+	}
+}

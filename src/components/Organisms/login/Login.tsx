@@ -1,13 +1,13 @@
 import React from "react";
 import Button from "../../Atoms/Button/Button";
 import Input from "../../Atoms/Input/Input";
-import "./Login.scss";
-import useLogin from "./useLogin";
+import "./LogIn.scss";
+import useLogIn from "./useLogIn";
 
 type Props = {};
 
-const Login = (props: Props) => {
-	const { login, password, setLogin, setPassword } = useLogin();
+const LogIn = (props: Props) => {
+	const { login, password, setLogin, setPassword } = useLogIn();
 
 	const handleOnClick = () => {
 		console.log(login, password);
@@ -34,4 +34,4 @@ const Login = (props: Props) => {
 	);
 };
 
-export default Login;
+export default LogIn;

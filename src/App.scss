@@ -5,3 +5,25 @@
 	height: 100vh;
 	background-color: variable.$background;
 }
+body {
+	background-color: #282c34;
+}
+
+.App section {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-height: 100vh;
+	background-color: #282535;
+}
+
+p {
+	max-width: 500px;
+	margin-bottom: 12px;
+	line-height: 24px;
+	padding: 10px 20px;
+	border-radius: 25px;
+	position: relative;
+	color: white;
+	text-align: center;
+}

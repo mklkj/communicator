@@ -1,9 +1,20 @@
 import React from "react";
+import FriendItem from "../../Atoms/FriendItem/FriendItem";
+import "./SidePanel.scss";
 
-type Props = {};
+type Props = {
+	className?: string;
+	visible: boolean;
+	options: any[];
+};
 
 const SidePanel = (props: Props) => {
-	return <div>SidePanel</div>;
+	const { className, options, visible } = props;
+	return (
+		<div className={`side-panel ${className}`}>
+			{visible && options.map((friend) => <FriendItem value={friend} />)}
+		</div>
+	);
 };
 
 export default SidePanel;

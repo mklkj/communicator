@@ -10,9 +10,9 @@ type Props = {
 const Button = (props: Props) => {
 	const { children, className, onClick } = props;
 	return (
-		<div className={`button ${className || ""}`}>
-			<button onClick={onClick}>{children}</button>
-		</div>
+		<button className={`button ${className || ""}`} onClick={onClick}>
+			{children}
+		</button>
 	);
 };
 
