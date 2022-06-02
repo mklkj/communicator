@@ -4,10 +4,20 @@ import Input from "../../Atoms/Input/Input";
 import "./LogIn.scss";
 import useLogIn from "./useLogIn";
 
-type Props = {};
+type Props = {
+	register?: boolean;
+};
 
 const LogIn = (props: Props) => {
-	const { login, password, setLogin, setPassword } = useLogIn();
+	const { register } = props;
+	const {
+		login,
+		password,
+		setLogin,
+		setPassword,
+		passwordRepeat,
+		setPasswordRepeat,
+	} = useLogIn();
 
 	const handleOnClick = () => {
 		console.log(login, password);
@@ -26,8 +36,18 @@ const LogIn = (props: Props) => {
 					value={password}
 					onChange={setPassword}
 					placeholder="password"
+					type="password"
 					className="login-input"
 				/>
+				{register && (
+					<Input
+						value={passwordRepeat}
+						onChange={setPasswordRepeat}
+						placeholder="reapet password"
+						type="password"
+						className="login-input"
+					/>
+				)}
 				<Button onClick={handleOnClick}>Login</Button>
 			</div>
 		</div>

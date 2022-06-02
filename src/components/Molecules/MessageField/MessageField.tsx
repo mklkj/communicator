@@ -26,8 +26,6 @@ const MessageField = (props: Props) => {
 		setInputValue("");
 	};
 
-	console.log(inputValue);
-
 	return (
 		<div className="message-field">
 			<input

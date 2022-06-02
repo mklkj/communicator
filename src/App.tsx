@@ -10,7 +10,6 @@ const App = () => {
 	const { friendsVisible, handleOnHeaderClick } = useHeader();
 	const { messages, setMessages, friends } = useApp();
 
-	console.log(messages);
 	return (
 		<div className="app">
 			<Header
@@ -20,7 +19,11 @@ const App = () => {
 					handleOnSignOutClick: () => {},
 				}}
 			/>
-			<Main data={{ messages, friends }} visible={{ friendsVisible }} />
+			<Main
+				type="chat"
+				data={{ messages, friends }}
+				visible={{ friendsVisible }}
+			/>
 			<MessageField onChange={{ setMessages }} />
 		</div>
 	);
