@@ -4,16 +4,21 @@ import MessageItem from "../../Atoms/Message/MessageItem";
 import SidePanel from "../../Molecules/SidePanel/SidePanel";
 import MessageField from "../../Molecules/MessageField/MessageField";
 import {Message, Person} from "../../../helpers/useApp";
+import Header from "../../Molecules/Header/Header";
+import useHeader from "../../Molecules/Header/useHeader";
 
 type Props = {
-	data: { messages: Message[]; setMessages: (message: any) => void, friends: Person[] };
-	visible: { friendsVisible: boolean };
+	data: {
+		messages: Message[],
+		setMessages: (message: any) => void,
+		friends: Person[],
+	};
 };
 
 const Chat = (props: Props) => {
-	const { visible, data } = props;
+	const { friendsVisible, handleOnHeaderClick } = useHeader();
+	const { data } = props;
 	const { messages, setMessages, friends } = data;
-	const { friendsVisible } = visible;
 	const messagesAreaRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -25,6 +30,14 @@ const Chat = (props: Props) => {
 
 	return (
 		<div className={`chat ${friendsVisible ? "chat--expanded" : ""}`}>
+			<Header
+				visible={{ friendsVisible }}
+				className={`chat__header`}
+				onClick={{
+					handleOnHeaderClick: handleOnHeaderClick,
+					handleOnSignOutClick: () => {},
+				}}
+			/>
 			<SidePanel
 				options={friends}
 				visible={friendsVisible}

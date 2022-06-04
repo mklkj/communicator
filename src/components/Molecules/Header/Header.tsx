@@ -3,6 +3,7 @@ import Button from "../../Atoms/Button/Button";
 import "./Header.scss";
 
 type Props = {
+	className?: string;
 	visible: { friendsVisible: boolean };
 	onClick: {
 		handleOnHeaderClick: () => void;
@@ -11,12 +12,12 @@ type Props = {
 };
 
 const Header = (props: Props) => {
-	const { onClick, visible } = props;
+	const { className, onClick, visible } = props;
 	const { friendsVisible } = visible;
 	const { handleOnHeaderClick, handleOnSignOutClick } = onClick;
 
 	return (
-		<div className="header">
+		<div className={`header ${className}`}>
 			<div
 				className={`header-menu ${
 					friendsVisible ? "header-menu-x" : "header-menu-hamburger"
