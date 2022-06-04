@@ -6,17 +6,16 @@ type Props = {
 };
 
 const Message = (props: Props) => {
-	const { text, uid, photoURL } = props.message;
+	const { text, uid } = props.message;
 
 	const messageClass = uid === true ? "sent" : "received";
 
 	return (
 		<>
-			<div className={`message ${messageClass}`}>
+			<div className={`message message--${messageClass}`}>
 				<img
-					src={
-						photoURL || "https://api.adorable.io/avatars/23/abott@adorable.png"
-					}
+					className="message__avatar"
+					src={"https://i.pravatar.cc/40?u=" + uid}
 				/>
 				<p>{text}</p>
 			</div>
