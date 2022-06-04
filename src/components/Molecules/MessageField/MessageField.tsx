@@ -27,7 +27,7 @@ const MessageField = (props: Props) => {
 	};
 
 	return (
-		<div className="message-field">
+		<form className="message-field">
 			<input
 				className="message-field-input"
 				value={inputValue}
@@ -42,7 +42,7 @@ const MessageField = (props: Props) => {
 			>
 				{!inputValue ? "👍" : "Send"}
 			</button>
-		</div>
+		</form>
 	);
 };
 
