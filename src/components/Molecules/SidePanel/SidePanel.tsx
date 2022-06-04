@@ -1,11 +1,12 @@
 import React from "react";
 import FriendItem from "../../Atoms/FriendItem/FriendItem";
 import "./SidePanel.scss";
+import {Person} from "../../../helpers/useApp";
 
 type Props = {
 	className?: string;
 	visible: boolean;
-	options: any[];
+	options: Person[];
 };
 
 const SidePanel = (props: Props) => {

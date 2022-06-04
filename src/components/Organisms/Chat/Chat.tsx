@@ -1,11 +1,12 @@
 import React, {useEffect, useRef} from "react";
-import Message from "../../Atoms/Message/Message";
-import SidePanel from "../../Molecules/SidePanel/SidePanel";
 import "./Chat.scss";
+import MessageItem from "../../Atoms/Message/MessageItem";
+import SidePanel from "../../Molecules/SidePanel/SidePanel";
 import MessageField from "../../Molecules/MessageField/MessageField";
+import {Message, Person} from "../../../helpers/useApp";
 
 type Props = {
-	data: { messages: any[]; setMessages: (message: any) => void, friends: any[] };
+	data: { messages: Message[]; setMessages: (message: any) => void, friends: Person[] };
 	visible: { friendsVisible: boolean };
 };
 
@@ -34,7 +35,7 @@ const Chat = (props: Props) => {
 				ref={messagesAreaRef}
 				className={`chat__messages`}
             >
-				{messages && messages.map((msg) => <Message key={msg.id} message={msg} />)}
+				{messages && messages.map((msg) => <MessageItem key={msg.id} message={msg} />)}
 			</div>
 			<MessageField
                 className={"chat__input"}

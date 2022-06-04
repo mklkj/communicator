@@ -1,11 +1,12 @@
 import React from "react";
 import "./Message.scss";
+import {Message} from "../../../helpers/useApp";
 
 type Props = {
-	message: any;
+	message: Message;
 };
 
-const Message = (props: Props) => {
+const MessageItem = (props: Props) => {
 	const { text, uid } = props.message;
 
 	const messageClass = uid === true ? "sent" : "received";
@@ -23,4 +24,4 @@ const Message = (props: Props) => {
 	);
 };
 
-export default Message;
+export default MessageItem;

@@ -1,9 +1,10 @@
 import React from "react";
 import Chat from "../Chat/Chat";
 import Login from "../Login/Login";
+import {Message, Person} from "../../../helpers/useApp";
 
 type Props = {
-	data: { messages: any[]; setMessages: (message: any) => void, friends: any[] };
+	data: { messages: Message[]; setMessages: (message: any) => void, friends: Person[] };
 	visible: { friendsVisible: boolean };
 	type: string;
 };
