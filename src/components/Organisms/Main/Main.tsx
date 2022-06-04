@@ -1,6 +1,6 @@
 import React from "react";
 import Chat from "../Chat/Chat";
-import LogIn from "../LogIn/LogIn";
+import Login from "../Login/Login";
 
 type Props = {
 	data: { messages: any[]; friends: any[] };
@@ -13,9 +13,9 @@ const Main = (props: Props) => {
 	const children = () => {
 		switch (type) {
 			case "login":
-				return <LogIn />;
+				return <Login />;
 			case "register":
-				return <LogIn register />;
+				return <Login register />;
 			case "chat":
 				return <Chat visible={visible} data={data} />;
 		}

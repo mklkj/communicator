@@ -1,14 +1,14 @@
 import React from "react";
 import Button from "../../Atoms/Button/Button";
 import Input from "../../Atoms/Input/Input";
-import "./LogIn.scss";
-import useLogIn from "./useLogIn";
+import "./Login.scss";
+import useLogin from "./useLogin";
 
 type Props = {
 	register?: boolean;
 };
 
-const LogIn = (props: Props) => {
+const Login = (props: Props) => {
 	const { register } = props;
 	const {
 		login,
@@ -17,7 +17,7 @@ const LogIn = (props: Props) => {
 		setPassword,
 		passwordRepeat,
 		setPasswordRepeat,
-	} = useLogIn();
+	} = useLogin();
 
 	const handleOnClick = () => {
 		console.log(login, password);
@@ -54,4 +54,4 @@ const LogIn = (props: Props) => {
 	);
 };
 
-export default LogIn;
+export default Login;

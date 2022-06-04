@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const useLogIn = () => {
+const useLogin = () => {
 	const [login, setLogin] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [passwordRepeat, setPasswordRepeat] = useState<string>("");
@@ -15,4 +15,4 @@ const useLogIn = () => {
 	};
 };
 
-export default useLogIn;
+export default useLogin;
