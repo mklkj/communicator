@@ -31,14 +31,14 @@ const MessageField = (props: Props) => {
 	return (
 		<form className={`message-field ${className}`}>
 			<input
-				className="message-field-input"
+				className="message-field__input"
 				value={inputValue}
 				onChange={(e) => setInputValue(e.target.value)}
 				placeholder="say something nice"
 			/>
 
 			<button
-				className="message-field-button"
+				className="message-field__button"
 				type="submit"
 				onClick={handleOnClick}
 			>
