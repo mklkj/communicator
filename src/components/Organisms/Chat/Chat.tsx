@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, {useEffect, useRef} from "react";
 import Message from "../../Atoms/Message/Message";
 import SidePanel from "../../Molecules/SidePanel/SidePanel";
 import "./Chat.scss";
@@ -13,6 +13,14 @@ const Chat = (props: Props) => {
 	const { visible, data } = props;
 	const { messages, setMessages, friends } = data;
 	const { friendsVisible } = visible;
+	const messagesAreaRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		const domNode = messagesAreaRef.current || false;
+		if (domNode) {
+			domNode.scrollTop = domNode.scrollHeight;
+		}
+	});
 
 	return (
 		<div className={`chat ${friendsVisible ? "chat--expanded" : ""}`}>
@@ -23,6 +31,7 @@ const Chat = (props: Props) => {
 			/>
 
 			<div
+				ref={messagesAreaRef}
 				className={`chat__messages`}
             >
 				{messages && messages.map((msg) => <Message key={msg.id} message={msg} />)}
