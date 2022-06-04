@@ -11,8 +11,8 @@ type Props = {
 const SidePanel = (props: Props) => {
 	const { className, options, visible } = props;
 	return (
-		<div className={`side-panel ${className}`}>
-			{visible && options.map((friend) => <FriendItem value={friend} />)}
+		<div className={`side-panel ${className} ${!visible ? `side-panel--hidden` : ``}`}>
+			{options.map((friend) => <FriendItem value={friend} />)}
 		</div>
 	);
 };

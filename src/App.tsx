@@ -2,7 +2,6 @@ import React from "react";
 import "./App.scss";
 import Header from "./components/Molecules/Header/Header";
 import useHeader from "./components/Molecules/Header/useHeader";
-import MessageField from "./components/Molecules/MessageField/MessageField";
 import Main from "./components/Organisms/Main/Main";
 import useApp from "./helpers/useApp";
 
@@ -21,10 +20,9 @@ const App = () => {
 			/>
 			<Main
 				type="chat"
-				data={{ messages, friends }}
+				data={{ messages, setMessages, friends }}
 				visible={{ friendsVisible }}
 			/>
-			<MessageField onChange={{ setMessages }} />
 		</div>
 	);
 };

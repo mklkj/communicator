@@ -1,28 +1,39 @@
 .chat {
-	&-friends {
-		left: 0;
-		height: auto;
+	display: grid;
+	grid-template:
+		"messages"
+		"input";
+
+	&--expanded {
+		grid-template:
+		"friends messages"
+		"friends input";
 	}
-	&-messages {
+
+	&__friends {
+		grid-area: friends;
+	}
+	&__messages {
+		grid-area: messages;
 		height: 90vh;
 		width: 100%;
 		overflow-y: scroll;
 		display: flex;
 		flex-direction: column;
 	}
-
-	&-visible {
-		display: flex;
+	&__input {
+		grid-area: input;
 	}
-	&-messages::-webkit-scrollbar {
+
+	&__messages::-webkit-scrollbar {
 		width: 0.25rem;
 	}
 
-	&-messages::-webkit-scrollbar-track {
+	&__messages::-webkit-scrollbar-track {
 		background: #1e1e24;
 	}
 
-	&-messages::-webkit-scrollbar-thumb {
+	&__messages::-webkit-scrollbar-thumb {
 		background: #6649b8;
 	}
 }

@@ -3,9 +3,11 @@ import "./MessageField.scss";
 
 type Props = {
 	onChange: { setMessages: (message: any) => void };
+	className?: string;
 };
 
 const MessageField = (props: Props) => {
+	const className = props.className;
 	const { setMessages } = props.onChange;
 	const dummy = useRef<any>();
 
@@ -27,7 +29,7 @@ const MessageField = (props: Props) => {
 	};
 
 	return (
-		<form className="message-field">
+		<form className={`message-field ${className}`}>
 			<input
 				className="message-field-input"
 				value={inputValue}

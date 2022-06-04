@@ -3,7 +3,7 @@ import Chat from "../Chat/Chat";
 import Login from "../Login/Login";
 
 type Props = {
-	data: { messages: any[]; friends: any[] };
+	data: { messages: any[]; setMessages: (message: any) => void, friends: any[] };
 	visible: { friendsVisible: boolean };
 	type: string;
 };
