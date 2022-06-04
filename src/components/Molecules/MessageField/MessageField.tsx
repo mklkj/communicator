@@ -1,5 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, {useState} from "react";
 import "./MessageField.scss";
+import {Message} from "../../../helpers/useApp";
 
 type Props = {
 	onChange: { setMessages: (message: any) => void };
@@ -9,7 +10,6 @@ type Props = {
 const MessageField = (props: Props) => {
 	const className = props.className;
 	const { setMessages } = props.onChange;
-	const dummy = useRef<any>();
 
 	const [inputValue, setInputValue] = useState("");
 
@@ -21,7 +21,7 @@ const MessageField = (props: Props) => {
 			uid: true,
 		});
 		e.preventDefault();
-		setMessages((message: any) => [
+		setMessages((message: Message[]) => [
 			...message,
 			userMessage({ id: message.length + 1 }, inputValue ? inputValue : "👍"),
 		]);

@@ -12,13 +12,14 @@ type Props = {
 		messages: Message[],
 		setMessages: (message: any) => void,
 		friends: Person[],
+		setLogIn: (isLoggedIn: Boolean) => void,
 	};
 };
 
 const Chat = (props: Props) => {
 	const { friendsVisible, handleOnHeaderClick } = useHeader();
 	const { data } = props;
-	const { messages, setMessages, friends } = data;
+	const { messages, setMessages, friends, setLogIn } = data;
 	const messagesAreaRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -35,7 +36,7 @@ const Chat = (props: Props) => {
 				className={`chat__header`}
 				onClick={{
 					handleOnHeaderClick: handleOnHeaderClick,
-					handleOnSignOutClick: () => {},
+					handleOnSignOutClick: () => { setLogIn(false) },
 				}}
 			/>
 			<SidePanel

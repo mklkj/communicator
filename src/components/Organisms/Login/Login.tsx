@@ -1,15 +1,17 @@
 import React from "react";
-import Button from "../../Atoms/Button/Button";
 import Input from "../../Atoms/Input/Input";
 import "./Login.scss";
 import useLogin from "./useLogin";
 
 type Props = {
+	data: {
+		setLogIn: (isLoggedIn: Boolean) => void,
+	}
 	register?: boolean;
 };
 
 const Login = (props: Props) => {
-	const { register } = props;
+	const { data, register } = props;
 	const {
 		login,
 		password,
@@ -21,11 +23,15 @@ const Login = (props: Props) => {
 
 	const handleOnClick = () => {
 		console.log(login, password);
+
+		if (login === "admin" && password === "admin") {
+			data.setLogIn(true);
+		}
 	};
 
 	return (
 		<div className="login">
-			<div className="login-container">
+			<form className="login-container">
 				<Input
 					value={login}
 					onChange={setLogin}
@@ -48,8 +54,8 @@ const Login = (props: Props) => {
 						className="login-input"
 					/>
 				)}
-				<Button onClick={handleOnClick}>Login</Button>
-			</div>
+				<button type="submit" onClick={handleOnClick}>Login</button>
+			</form>
 		</div>
 	);
 };

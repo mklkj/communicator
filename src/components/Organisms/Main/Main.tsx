@@ -8,18 +8,18 @@ type Props = {
 		messages: Message[],
 		setMessages: (message: any) => void,
 		friends: Person[],
+		setLogIn: (isLoggedIn: Boolean) => void,
 	};
 	type: string;
 };
 
 const Main = (props: Props) => {
 	const { data, type } = props;
+    const setLogIn = data.setLogIn
 	const children = () => {
 		switch (type) {
 			case "login":
-				return <Login />;
-			case "register":
-				return <Login register />;
+				return <Login data={{ setLogIn }} />;
 			case "chat":
 				return <Chat data={data} />;
 		}

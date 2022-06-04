@@ -17,7 +17,7 @@ const Header = (props: Props) => {
 	const { handleOnHeaderClick, handleOnSignOutClick } = onClick;
 
 	return (
-		<div className={`header ${className}`}>
+		<form className={`header ${className}`}>
 			<div
 				className={`header-menu ${
 					friendsVisible ? "header-menu-x" : "header-menu-hamburger"
@@ -28,7 +28,7 @@ const Header = (props: Props) => {
 			</div>
 			<div>Messenger czy ki chuj</div>
 			<Button onClick={handleOnSignOutClick}>Sign Out</Button>
-		</div>
+		</form>
 	);
 };
 

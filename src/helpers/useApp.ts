@@ -13,6 +13,7 @@ type Message = {
 }
 
 const useApp = () => {
+	const [isLoggedIn, setLogIn] = useState<Boolean>(false);
 	const [messages, setMessages] = useState<Message[]>([
 		{ id: 1, avatar: "", uid: "", text: "ffff" },
 		{ id: 2, avatar: "", uid: "", text: "ffff" },
@@ -33,7 +34,14 @@ const useApp = () => {
         { id: 2,  name: "michal"},
         { id: 3,  name: "szymon"},
     ]);
-	return { messages, setMessages, friends };
+	return {
+		messages,
+		setMessages,
+		friends,
+		setFriends,
+		isLoggedIn,
+		setLogIn,
+	};
 };
 
 export type { Person, Message };
