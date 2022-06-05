@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import "./App.scss";
 import Main from "./components/Organisms/Main/Main";
 import useApp from "./helpers/useApp";
-import { AuthContext } from "./components/Organisms/login/auth";
+import { AuthContext } from "./components/Organisms/Login/auth";
 
 const App = () => {
   const { messages, setMessages, friends, isLoggedIn, setLogIn } = useApp();

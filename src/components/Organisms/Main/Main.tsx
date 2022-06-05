@@ -1,6 +1,6 @@
 import React from "react";
 import Chat from "../Chat/Chat";
-import LogIn from "../login/Login";
+import LogIn from "../Login/Login";
 import { Message, Person } from "../../../helpers/useApp";
 
 type Props = {
