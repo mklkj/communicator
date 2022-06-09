@@ -29,12 +29,12 @@ const MessageField = (props: Props) => {
 			...message,
 			userMessage({ id: message.length + 1 }, inputValue ? inputValue : "👍"),
 		]);
+		socket.emit("send_message", { message: inputValue });
 		setInputValue("");
 	};
 
 	useEffect(() => {
 		console.log(socket);
-		socket.volatile.emit("ping", ++count);
 		socket.on("receive_message", (data) => {
 			console.log(data.message);
 		});
