@@ -4,7 +4,7 @@ import axios from "axios";
 import Button from "../../Atoms/Button/Button";
 import Input from "../../Atoms/Input/Input";
 import "./Login.scss";
-import useLogIn from "./useLogin";
+import useLogin from "./useLogin";
 import { AuthContext } from "./auth";
 
 type Props = {
@@ -20,7 +20,7 @@ const LogIn = (props: Props) => {
 		setPassword,
 		passwordRepeat,
 		setPasswordRepeat,
-	} = useLogIn();
+	} = useLogin();
 
 	const { setToken } = useContext(AuthContext);
 

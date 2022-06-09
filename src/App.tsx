@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "./App.scss";
-import { AuthContext } from "./components/Organisms/login/auth";
+import { AuthContext } from "./components/Organisms/Login/auth";
 import Main from "./components/Organisms/Main/Main";
 import useApp from "./helpers/useApp";
 
