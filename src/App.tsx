@@ -5,17 +5,35 @@ import useApp from "./helpers/useApp";
 import { AuthContext } from "./components/Organisms/login/auth";
 
 const App = () => {
-  const { messages, setMessages, friends, isLoggedIn, setLogIn } = useApp();
-  const { token } = useContext(AuthContext);
+	const {
+		messages,
+		setMessages,
+		friends,
+		isLoggedIn,
+		setLogIn,
+		currentUser,
+		setCurrentUser,
+	} = useApp();
+	const { token } = useContext(AuthContext);
 
-  return (
-    <div className="app">
-      <Main
-        type={token ? `chat` : `login`}
-        data={{ messages, setMessages, friends, setLogIn }}
-      />
-    </div>
-  );
+	console.log(currentUser);
+
+	console.log(token);
+	return (
+		<div className="app">
+			<Main
+				type={token ? `chat` : `login`}
+				data={{
+					messages,
+					setMessages,
+					friends,
+					setLogIn,
+					currentUser,
+					setCurrentUser,
+				}}
+			/>
+		</div>
+	);
 };
 
 export default App;

@@ -1,14 +1,18 @@
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./MessageField.scss";
-import {Message} from "../../../helpers/useApp";
+import { Message } from "../../../helpers/useApp";
+import axios from "axios";
+import io from "socket.io-client";
+const socket = io("http://localhost:3001");
 
 type Props = {
 	onChange: { setMessages: (message: any) => void };
 	className?: string;
+	data: any;
 };
 
 const MessageField = (props: Props) => {
-	const className = props.className;
+	const { className, data } = props;
 	const { setMessages } = props.onChange;
 
 	const [inputValue, setInputValue] = useState("");
@@ -27,6 +31,14 @@ const MessageField = (props: Props) => {
 		]);
 		setInputValue("");
 	};
+
+	useEffect(() => {
+		console.log(socket);
+		socket.volatile.emit("ping", ++count);
+		socket.on("receive_message", (data) => {
+			console.log(data.message);
+		});
+	}, [inputValue]);
 
 	return (
 		<form className={`message-field ${className}`}>
