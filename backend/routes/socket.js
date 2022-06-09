@@ -24,32 +24,32 @@ const mongoClient = new MongoClient(
 const main = async () => {
 	await mongoClient.connect();
 
-	const mongoCollection = mongoClient
-		.db("crud-quotes")
-		.collection("socket.io-adapter-events");
+	const mongoCollection = mongoClient.db("new").collection("chat");
 	const emitter = new Emitter(mongoCollection);
 
 	// setInterval(() => {
 	// 	emitter.emit("ping", new Date());
 	// }, 1000);
-	try {
-		await mongoClient
-			.db("crud-quotes")
-			.createCollection("socket.io-adapter-events", {
-				capped: true,
-				size: 1e6,
-			});
-	} catch (e) {
-		// collection already exists
-	}
+	// try {
+	// 	await mongoClient
+	// 		.db("crud-quotes")
+	// 		.createCollection("socket.io-adapter-events", {
+	// 			capped: true,
+	// 			size: 1e6,
+	// 		});
+	// } catch (e) {
+	// 	// collection already exists
+	// }
 
 	io.adapter(createAdapter(mongoCollection));
 	io.listen(3001);
 
-	io.on("send_message", (data) => {
-		console.log(data);
-		io.broadcast.emit("receive_message", data);
-		emitter.emit("message", data.message);
+	io.on("connection", (socket) => {
+		socket.on("send_message", (data) => {
+			console.log(data);
+			socket.broadcast.emit("receive_message", data);
+			emitter.emit("message", data.message);
+		});
 	});
 };
 

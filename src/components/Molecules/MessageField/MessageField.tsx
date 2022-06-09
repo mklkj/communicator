@@ -38,6 +38,9 @@ const MessageField = (props: Props) => {
 		socket.on("receive_message", (data) => {
 			console.log(data.message);
 		});
+		socket.on("send_message", (data) => {
+			console.log(data.message);
+		});
 	}, [inputValue]);
 
 	return (
