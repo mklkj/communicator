@@ -1,47 +1,46 @@
 import React, { useEffect, useState } from "react";
 import "./MessageField.scss";
 import { Message } from "../../../helpers/useApp";
-import axios from "axios";
-import io from "socket.io-client";
-const socket = io("http://localhost:3001");
 
 type Props = {
 	onChange: { setMessages: (message: any) => void };
 	className?: string;
+	socket: any,
 	data: any;
 };
 
+const userMessage = (data: { id: number }, text: string) => ({
+	id: data?.id,
+	avatar: "",
+	text,
+	uid: true,
+});
+
 const MessageField = (props: Props) => {
-	const { className, data } = props;
+	const { className, socket } = props;
 	const { setMessages } = props.onChange;
 
 	const [inputValue, setInputValue] = useState("");
 
 	const handleOnClick = async (e: any) => {
-		const userMessage = (data: { id: number }, text: string) => ({
-			id: data?.id,
-			avatar: "",
-			text,
-			uid: true,
-		});
 		e.preventDefault();
-		setMessages((message: Message[]) => [
-			...message,
-			userMessage({ id: message.length + 1 }, inputValue ? inputValue : "👍"),
-		]);
-		socket.emit("send_message", { message: inputValue });
+		socket.emit("add_message", { message: inputValue ? inputValue : "👍" });
 		setInputValue("");
 	};
 
 	useEffect(() => {
-		console.log(socket);
-		socket.on("receive_message", (data) => {
-			console.log(data.message);
+		if (socket == null) {
+			return;
+		}
+
+		socket.on("new_message", (data: { message: string; }) => {
+			console.log(`print: ` + data.message);
+			setMessages((messages: Message[]) => [
+				...messages,
+				userMessage({ id: messages.length + 1 }, data.message),
+			]);
 		});
-		socket.on("send_message", (data) => {
-			console.log(data.message);
-		});
-	}, [inputValue]);
+	}, [socket]);
 
 	return (
 		<form className={`message-field ${className}`}>

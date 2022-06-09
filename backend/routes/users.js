@@ -18,7 +18,6 @@ function generateAccessToken(username) {
 MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
 	(client) => {
 		console.log("Users connected to database");
-		console.log(app);
 		const db = client.db("crud-quotes");
 		const usersCollection = db.collection("users");
 		app.use(express.json());

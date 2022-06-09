@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import "./Chat.scss";
 import MessageItem from "../../Atoms/Message/MessageItem";
 import SidePanel from "../../Molecules/SidePanel/SidePanel";
@@ -6,6 +6,7 @@ import MessageField from "../../Molecules/MessageField/MessageField";
 import { Message, Person } from "../../../helpers/useApp";
 import Header from "../../Molecules/Header/Header";
 import useHeader from "../../Molecules/Header/useHeader";
+import io from "socket.io-client";
 
 type Props = {
 	data: {
@@ -19,6 +20,8 @@ type Props = {
 };
 
 const Chat = (props: Props) => {
+	const [socket, setSocket] = useState<any>(null);
+
 	const { friendsVisible, handleOnHeaderClick } = useHeader();
 	const { data } = props;
 	const {
@@ -37,7 +40,13 @@ const Chat = (props: Props) => {
 		if (domNode) {
 			domNode.scrollTop = domNode.scrollHeight;
 		}
-	}, []);
+	});
+
+	useEffect(() => {
+		const newSocket = io(`http://${window.location.hostname}:3001`); // todo: add some token to url?
+		setSocket(newSocket);
+		return () => {newSocket.close()};
+	}, [setSocket]);
 
 	return (
 		<div className={`chat ${friendsVisible ? "chat--expanded" : ""}`}>
@@ -64,6 +73,7 @@ const Chat = (props: Props) => {
 			</div>
 			<MessageField
 				className={"chat__input"}
+				socket={socket}
 				onChange={{ setMessages }}
 				data={currentUser}
 			/>
