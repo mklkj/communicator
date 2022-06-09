@@ -12,7 +12,7 @@ type Props = {
 const userMessage = (data: { id: number }, text: string) => ({
 	id: data?.id,
 	avatar: "",
-	text,
+	text: text,
 	uid: true,
 });
 
@@ -24,21 +24,17 @@ const MessageField = (props: Props) => {
 
 	const handleOnClick = async (e: any) => {
 		e.preventDefault();
-		socket.emit("add_message", { message: inputValue ? inputValue : "👍" });
+		socket.emit("add_message", {
+			text: inputValue ? inputValue : "👍",
+		});
 		setInputValue("");
 	};
 
 	useEffect(() => {
-		if (socket == null) {
-			return;
-		}
+		if (socket == null) return;
 
-		socket.on("new_message", (data: { message: string; }) => {
-			console.log(`print: ` + data.message);
-			setMessages((messages: Message[]) => [
-				...messages,
-				userMessage({ id: messages.length + 1 }, data.message),
-			]);
+		socket.on("new_message", (data: any) => {
+			setMessages((messages: Message[]) => [...messages, data,]);
 		});
 	}, [socket]);
 

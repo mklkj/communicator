@@ -32,11 +32,18 @@ const main = async () => {
 
 	io.on("connection", (socket) => {
 		socket.on("add_message", (data) => {
-			console.log(`New message: ` + data.message);
-			dbEmitter.emit("message", data.message);
+			const message = {
+				uid: true,
+				text: data.text,
+				timestamp: +new Date(),
+				from: 1, // todo
+				to: 2, // todo
+			};
 
-			socket.emit("new_message", data); // self
-			socket.broadcast.emit("new_message", data); // other
+			dbEmitter.emit("message", message);
+
+			socket.emit("new_message", message); // to sender self
+			socket.broadcast.emit("new_message", {...message, uid: ""}); // to receiver
 		});
 	});
 };
