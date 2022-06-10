@@ -66,6 +66,8 @@ const Chat = (props: Props) => {
 						setLogIn(false);
 						document.cookie = "user=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
 						document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+						document.cookie =
+							"currentDate=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
 					},
 				}}
 			/>

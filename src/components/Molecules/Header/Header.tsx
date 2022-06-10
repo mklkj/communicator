@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getCookie } from "../../../helpers/useApp";
 import Button from "../../Atoms/Button/Button";
 import "./Header.scss";
 
@@ -16,6 +17,29 @@ const Header = (props: Props) => {
 	const { className, onClick, visible, text } = props;
 	const { friendsVisible } = visible;
 	const { handleOnHeaderClick, handleOnSignOutClick } = onClick;
+	const [time, setTime] = useState<any>();
+	const getTime = () => {
+		const now = new Date();
+		const timestamp = new Date(parseInt(getCookie("currentDate") as string));
+		const timeNow = (now.getTime() - timestamp.getTime()) / 1000;
+		let h: number | string = Math.floor(timeNow / 3600); // get hours
+		let m: number | string = Math.floor((timeNow - h * 3600) / 60); // get minutes
+		let s: number | string = Math.floor(timeNow - h * 3600 - m * 60); //  get seconds
+		if (h < 10) h = "0" + h;
+		if (m < 10) m = "0" + m;
+		if (s < 10) s = "0" + s;
+		setTime(`${h}:${m}:${s}`);
+	};
+
+	useEffect(() => {
+		const interval = setInterval(getTime, 1000);
+
+		return () => {
+			clearInterval(interval);
+		};
+	}, []);
+
+	console.log(time, "TIME");
 
 	return (
 		<form className={`header ${className}`}>
@@ -27,7 +51,10 @@ const Header = (props: Props) => {
 			>
 				{friendsVisible ? <>❌</> : <>☰</>}
 			</div>
-			<div>{text ? text : "Messenger"}</div>
+			<div>
+				<div>{text ? text : "Messenger"}</div>
+				{time && <div>Czas pracy {time}</div>}
+			</div>
 			<Button onClick={handleOnSignOutClick}>Sign Out</Button>
 		</form>
 	);

@@ -58,6 +58,9 @@ const LogIn = (props: Props) => {
 			}
 			document.cookie = `token=${data?.data}; path=/; max-age=${60 * 60 * 24};`;
 			document.cookie = `user=${login}; path=/; max-age=${60 * 60 * 24};`;
+			document.cookie = `currentDate=${Date.now()}; path=/; max-age=${
+				60 * 60 * 24
+			};`;
 			onLogin && onLogin(login, data?.data);
 			return setToken(data?.data);
 		} catch (err) {
