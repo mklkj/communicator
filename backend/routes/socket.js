@@ -2,13 +2,11 @@ const express = require("express");
 const http = require("http");
 const app = express();
 const server = http.createServer(app);
-const { Emitter } = require("@socket.io/mongo-emitter");
 const io = require("socket.io")(server, {
 	cors: {
 		origin: "*",
 	},
 });
-const { createAdapter } = require("@socket.io/mongo-adapter");
 const { MongoClient } = require("mongodb");
 const cors = require("cors");
 
@@ -24,15 +22,17 @@ const mongoClient = new MongoClient(
 const main = async () => {
 	await mongoClient.connect();
 
-	const mongoCollection = mongoClient.db("new").collection("chat");
-	const dbEmitter = new Emitter(mongoCollection);
+	const mongoCollection = mongoClient.db("crud-quotes").collection("messages");
+	// const dbEmitter = new Emitter(mongoCollection);
 
-	io.adapter(createAdapter(mongoCollection));
+	// io.adapter(createAdapter(mongoCollection));
 	io.listen(3001);
 
 	io.on("connection", (socket) => {
 		socket.on("add_message", (data) => {
-			dbEmitter.emit("message", data);
+			mongoCollection.insertOne(data);
+			// .then((result) => res.send("User added"))
+			// dbEmitter.emit("message", data);
 			socket.emit("new_message", data); // to sender self
 			socket.broadcast.emit("new_message", { ...data, uid: data.receiver }); // to receiver
 		});

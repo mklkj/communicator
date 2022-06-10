@@ -11,13 +11,6 @@ type Props = {
 	receiver?: string;
 };
 
-const userMessage = (data: { id: number }, text: string) => ({
-	id: data,
-	avatar: "",
-	text: text,
-	uid: true,
-});
-
 const MessageField = (props: Props) => {
 	const { className, socket, sender, receiver } = props;
 	const { setMessages } = props.onChange;
@@ -41,7 +34,9 @@ const MessageField = (props: Props) => {
 		if (socket == null) return;
 
 		socket.on("new_message", (data: any) => {
-			setMessages((messages: Message[]) => [...messages, data]);
+			console.log(data, sender);
+			(sender === data.receiver || sender === data.sender) &&
+				setMessages((messages: Message[]) => [...messages, data]);
 		});
 	}, [socket]);
 

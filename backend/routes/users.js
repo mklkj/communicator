@@ -24,9 +24,9 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
 		app.use(express.json());
 		app.use(express.urlencoded({ extended: true }));
 
-		app.get("/users/list", (req, res) => {
+		app.post("/users/list", (req, res) => {
 			usersCollection
-				.find({})
+				.find({ _id: { $ne: req.body.uid } })
 				.project({ username: 1 })
 				.toArray((err, result) => {
 					if (err) {
@@ -37,10 +37,13 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
 				});
 		});
 
-		app.get("/user/messages", (req, res) => {
+		app.post("/user/messages", (req, res) => {
 			messagesCollection
-				.find({})
-				.project({ username: 1 })
+				.find({
+					$or: [{ sender: req.body.uid }, { receiver: req.body.uid }],
+					$or: [{ sender: req.body.friend }, { receiver: req.body.friend }],
+				})
+				// .project({ username: 1 })
 				.toArray((err, result) => {
 					if (err) {
 						return res.send(err);
@@ -51,21 +54,19 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
 		});
 
 		app.post("/users/register", (req, res) => {
-			usersCollection
-				.count({ username: req.body.username })
-				.then((count) => {
-					if (count > 0) {
-						return res.status(400).json({ error: "User already exists" })
-					}
-					bcrypt.hash(req.body.password, 11, function (err, hash) {
-						usersCollection
-							.insertOne({
-								username: req.body.username,
-								password: hash,
-							})
-							.then((result) => res.send("User added"));
-					});
+			usersCollection.count({ username: req.body.username }).then((count) => {
+				if (count > 0) {
+					return res.status(400).json({ error: "User already exists" });
+				}
+				bcrypt.hash(req.body.password, 11, function (err, hash) {
+					usersCollection
+						.insertOne({
+							username: req.body.username,
+							password: hash,
+						})
+						.then((result) => res.send("User added"));
 				});
+			});
 		});
 
 		app.post("/users/login", (req, res) => {
@@ -93,7 +94,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
 				})
 				.catch((reason) => {
 					console.error(reason);
-					res.status(400).json({error: reason.message});
+					res.status(400).json({ error: reason.message });
 				});
 		});
 	}

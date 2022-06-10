@@ -35,7 +35,6 @@ const Chat = (props: Props) => {
 		friends,
 		setLogIn,
 		currentUser,
-		setCurrentUser,
 		currentFriend,
 		setCurrentFriend,
 		loggedUserData,
@@ -43,7 +42,6 @@ const Chat = (props: Props) => {
 	const messagesAreaRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		// currentUser
 		const domNode = messagesAreaRef.current || false;
 		if (domNode) {
 			domNode.scrollTop = domNode.scrollHeight;

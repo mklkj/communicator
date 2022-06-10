@@ -35,91 +35,11 @@ const useApp = (token: string) => {
 		getCookie("token") || token ? "chat" : "login"
 	);
 
-	console.log(token, "COOKIE");
 	useEffect(() => {
 		token && setType("chat");
 	}, [token]);
 
-	const [messages, setMessages] = useState<Message[]>([
-		{
-			id: 1,
-			avatar: "",
-			sender: "62a2de9191de43c94d5a3b9b",
-			text: "Litwo! Ojczyzno moja! Ty jesteś jak zdrowie",
-		},
-		{
-			id: 2,
-			avatar: "",
-			sender: "629cc3afd830cd4d4b7894bd",
-			text: "Ile cię trzeba cenić, ten tylko się dowie,\nKto cię stracił",
-		},
-		{
-			id: 3,
-			avatar: "",
-			sender: "62a2de9191de43c94d5a3b9b",
-			text: "Dziś piękność twą w całej ozdobie\nWidzę i opisuję, bo tęsknię po tobie",
-		},
-		{
-			id: 4,
-			avatar: "",
-			sender: "629cc3afd830cd4d4b7894bd",
-			text: "Panno święta, co Jasnej bronisz Częstochowy\nI w Ostrej świecisz Bramie!",
-		},
-		{
-			id: 5,
-			avatar: "",
-			sender: "62a2de9191de43c94d5a3b9b",
-			text: "Ty, co gród zamkowy\nNowogródzki ochraniasz z jego wiernym ludem!",
-		},
-		{
-			id: 5,
-			avatar: "",
-			sender: "629cc3afd830cd4d4b7894bd",
-			text: "Jak mnie dziecko do zdrowia powróciłaś cudem",
-		},
-		{
-			id: 5,
-			avatar: "",
-			sender: "62a2de9191de43c94d5a3b9b",
-			text: "Gdy od płaczącej matki, pod Twoją opiekę\nOfiarowany martwą podniosłem powiekę",
-		},
-		{
-			id: 5,
-			avatar: "",
-			sender: "629cc3afd830cd4d4b7894bd",
-			text: "I zaraz mogłem pieszo, do Twych świątyń progu\nIść za wrócone życie podziękować Bogu",
-		},
-		{
-			id: 5,
-			avatar: "",
-			sender: "62a2de9191de43c94d5a3b9b",
-			text: "Tak nas powrócisz cudem na Ojczyzny łono!...",
-		},
-		{
-			id: 5,
-			avatar: "",
-			sender: "629cc3afd830cd4d4b7894bd",
-			text: "Tymczasem, przenoś moją duszę utęsknioną\nDo tych pagórków leśnych, do tych łąk zielonych,\nSzeroko nad błękitnym Niemnem rozciągnionych",
-		},
-		{
-			id: 5,
-			avatar: "",
-			sender: "62a2de9191de43c94d5a3b9b",
-			text: "Do tych pól malowanych zbożem rozmaitem,\nWyzłacanych pszenicą, posrebrzanych żytem",
-		},
-		{
-			id: 5,
-			avatar: "",
-			sender: "629cc3afd830cd4d4b7894bd",
-			text: "Gdzie bursztynowy świerzop, gryka jak śnieg biała,\nGdzie panieńskim rumieńcem dzięcielina pała,",
-		},
-		{
-			id: 5,
-			avatar: "",
-			sender: "62a2de9191de43c94d5a3b9b",
-			text: "A wszystko przepasane jakby wstęgą, miedzą\nZieloną, na niej zrzadka ciche grusze siedzą",
-		},
-	]);
+	const [messages, setMessages] = useState<Message[]>([]);
 	const [friends, setFriends] = useState<Person[]>([]);
 	const [currentUser, setCurrentUser] = useState<string>(
 		getCookie("userId") as string
@@ -128,18 +48,38 @@ const useApp = (token: string) => {
 
 	useEffect(() => {
 		const getUsers = async () => {
-			return await axios.get("http://localhost:3005/users/list").then((e) => {
-				setFriends(e.data);
-				setCurrentFriend(e.data[0]._id);
-			});
+			return await axios
+				.post("http://localhost:3005/users/list", { uid: currentUser })
+				.then((e) => {
+					setFriends(e.data.filter((el: any) => el._id !== currentUser));
+					setCurrentFriend(e.data[0]._id);
+				});
 		};
 		try {
-			getUsers().then((res) => console.log(res));
+			getUsers();
 		} catch (err) {
 			console.log(err);
 		}
 	}, []);
-	console.log(currentUser, currentFriend, "TOKENS");
+
+	useEffect(() => {
+		const getMessages = async () => {
+			return await axios
+				.post("http://localhost:3005/user/messages", {
+					uid: currentUser,
+					friend: currentFriend,
+				})
+				.then((e) => {
+					setMessages(e.data);
+				});
+		};
+		try {
+			if (currentFriend) getMessages();
+		} catch (err) {
+			console.log(err);
+		}
+	}, [currentFriend]);
+
 	return {
 		messages,
 		setMessages,
