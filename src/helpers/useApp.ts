@@ -13,8 +13,16 @@ type Message = {
 	text: string;
 };
 
-const useApp = () => {
+const useApp = (token: string) => {
 	const [isLoggedIn, setLogIn] = useState<Boolean>(false);
+	const [loggedUserData, setLoggedUserData] = useState<any>({});
+	const [type, setType] = useState<"login" | "register" | "chat">(
+		token ? "chat" : "login"
+	);
+	useEffect(() => {
+		token && setType("chat");
+	}, [token]);
+
 	const [messages, setMessages] = useState<Message[]>([
 		{
 			id: 1,
@@ -120,6 +128,10 @@ const useApp = () => {
 		setLogIn,
 		currentUser,
 		setCurrentUser,
+		type,
+		setType,
+		loggedUserData,
+		setLoggedUserData,
 	};
 };
 

@@ -9,10 +9,11 @@ type Props = {
 		handleOnHeaderClick: () => void;
 		handleOnSignOutClick: () => void;
 	};
+	text?: string;
 };
 
 const Header = (props: Props) => {
-	const { className, onClick, visible } = props;
+	const { className, onClick, visible, text } = props;
 	const { friendsVisible } = visible;
 	const { handleOnHeaderClick, handleOnSignOutClick } = onClick;
 
@@ -26,7 +27,7 @@ const Header = (props: Props) => {
 			>
 				{friendsVisible ? <>❌</> : <>☰</>}
 			</div>
-			<div>Messenger czy ki chuj</div>
+			<div>{text ? text : "Messenger"}</div>
 			<Button onClick={handleOnSignOutClick}>Sign Out</Button>
 		</form>
 	);

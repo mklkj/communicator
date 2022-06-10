@@ -5,6 +5,7 @@ import Main from "./components/Organisms/Main/Main";
 import useApp from "./helpers/useApp";
 
 const App = () => {
+	const { token } = useContext(AuthContext);
 	const {
 		messages,
 		setMessages,
@@ -13,8 +14,11 @@ const App = () => {
 		setLogIn,
 		currentUser,
 		setCurrentUser,
-	} = useApp();
-	const { token } = useContext(AuthContext);
+		type,
+		setType,
+		loggedUserData,
+		setLoggedUserData,
+	} = useApp(token as string);
 
 	console.log(currentUser);
 
@@ -22,7 +26,7 @@ const App = () => {
 	return (
 		<div className="app">
 			<Main
-				type={token ? `chat` : `login`}
+				type={type}
 				data={{
 					messages,
 					setMessages,
@@ -30,6 +34,9 @@ const App = () => {
 					setLogIn,
 					currentUser,
 					setCurrentUser,
+					setType,
+					loggedUserData,
+					setLoggedUserData,
 				}}
 			/>
 		</div>

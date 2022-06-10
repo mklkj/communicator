@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Chat.scss";
 import MessageItem from "../../Atoms/Message/MessageItem";
 import SidePanel from "../../Molecules/SidePanel/SidePanel";
@@ -16,6 +16,8 @@ type Props = {
 		setLogIn: (isLoggedIn: Boolean) => void;
 		currentUser?: string;
 		setCurrentUser: Function;
+		loggedUserData: any;
+		setLoggedUserData: Function;
 	};
 };
 
@@ -31,6 +33,7 @@ const Chat = (props: Props) => {
 		setLogIn,
 		currentUser,
 		setCurrentUser,
+		loggedUserData,
 	} = data;
 	const messagesAreaRef = useRef<HTMLDivElement>(null);
 
@@ -45,7 +48,9 @@ const Chat = (props: Props) => {
 	useEffect(() => {
 		const newSocket = io(`http://${window.location.hostname}:3001`); // todo: add some token to url?
 		setSocket(newSocket);
-		return () => {newSocket.close()};
+		return () => {
+			newSocket.close();
+		};
 	}, [setSocket]);
 
 	return (
@@ -53,6 +58,7 @@ const Chat = (props: Props) => {
 			<Header
 				visible={{ friendsVisible }}
 				className={`chat__header`}
+				text={loggedUserData}
 				onClick={{
 					handleOnHeaderClick: handleOnHeaderClick,
 					handleOnSignOutClick: () => {

@@ -1,9 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const useLogin = () => {
-	const [login, setLogin] = useState<string>("admin");
-	const [password, setPassword] = useState<string>("admin");
+const useLogin = (register?: boolean) => {
+	const [login, setLogin] = useState<string>("");
+	const [password, setPassword] = useState<string>("");
 	const [passwordRepeat, setPasswordRepeat] = useState<string>("");
+
+	const handleReset = () => {
+		setLogin("");
+		setPassword("");
+		setPasswordRepeat("");
+	};
+
+	useEffect(() => {
+		handleReset();
+	}, [register]);
 
 	return {
 		login,
@@ -12,6 +22,7 @@ const useLogin = () => {
 		setPassword,
 		passwordRepeat,
 		setPasswordRepeat,
+		handleReset,
 	};
 };
 

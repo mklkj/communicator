@@ -6,6 +6,14 @@
 	height: 100%;
 	width: 100%;
 	background-color: variables.$background;
+	&-container {
+		&__register {
+			padding: 28px 0;
+			display: flex;
+			justify-content: center;
+			cursor: pointer;
+		}
+	}
 	&-input {
 		margin: 0 0 20px 0;
 	}

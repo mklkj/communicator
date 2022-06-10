@@ -9,10 +9,12 @@ import { AuthContext } from "./auth";
 
 type Props = {
 	register?: boolean;
+	onChange: () => void;
+	onLogin?: Function;
 };
 
 const LogIn = (props: Props) => {
-	const { register } = props;
+	const { register, onChange, onLogin } = props;
 	const {
 		login,
 		password,
@@ -20,7 +22,8 @@ const LogIn = (props: Props) => {
 		setPassword,
 		passwordRepeat,
 		setPasswordRepeat,
-	} = useLogin();
+		handleReset,
+	} = useLogin(register);
 
 	const { setToken } = useContext(AuthContext);
 
@@ -30,6 +33,8 @@ const LogIn = (props: Props) => {
 				return;
 			}
 			try {
+				onChange();
+				handleReset();
 				return axios.post("http://localhost:3005/users/register", {
 					password: password,
 					username: login,
@@ -43,6 +48,7 @@ const LogIn = (props: Props) => {
 				password: password,
 				username: login,
 			});
+			onLogin && onLogin(login);
 			return setToken(data.data);
 		} catch (err) {
 			console.log(err);
@@ -74,7 +80,14 @@ const LogIn = (props: Props) => {
 						className="login-input"
 					/>
 				)}
-				<Button onClick={handleOnClick}>Login</Button>
+				<Button onClick={handleOnClick}>
+					{register ? "Register" : "Login"}
+				</Button>
+				<div className="login-container__register">
+					<span onClick={onChange}>
+						{register ? "Log in into account" : "Register to service"}
+					</span>
+				</div>
 			</div>
 		</div>
 	);
