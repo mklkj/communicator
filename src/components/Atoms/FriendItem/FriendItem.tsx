@@ -8,7 +8,7 @@ type Props = {
 
 const FriendItem = (props: Props) => {
 	const { value } = props;
-	return <div className="friend-item">{value.username}</div>;
+	return <div className="friend-item">{value?.username}</div>;
 };
 
 export default FriendItem;

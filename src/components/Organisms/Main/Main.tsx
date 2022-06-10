@@ -21,17 +21,31 @@ type Props = {
 const Main = (props: Props) => {
 	const { data, type } = props;
 	const { setType, setLoggedUserData } = data;
+	const handleOnLogin = (username: string) => {
+		setLoggedUserData(username);
+	};
 	const children = () => {
 		switch (type) {
 			case "login":
 				return (
 					<LogIn
-						onChange={() => setType("register")}
-						onLogin={setLoggedUserData}
+						onChange={(set) => {
+							setType("register");
+							set();
+						}}
+						onLogin={handleOnLogin}
 					/>
 				);
 			case "register":
-				return <LogIn register onChange={() => setType("login")} />;
+				return (
+					<LogIn
+						register
+						onChange={(set) => {
+							setType("login");
+							set();
+						}}
+					/>
+				);
 			case "chat":
 				return <Chat data={data} />;
 		}

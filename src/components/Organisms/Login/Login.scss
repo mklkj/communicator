@@ -7,11 +7,21 @@
 	width: 100%;
 	background-color: variables.$background;
 	&-container {
-		&__register {
+		&__text {
 			padding: 28px 0;
 			display: flex;
 			justify-content: center;
 			cursor: pointer;
+		}
+
+		&__wrong {
+			width: 202px;
+			position: absolute;
+			padding: 28px 0;
+			display: flex;
+			justify-content: center;
+			cursor: pointer;
+			color: red;
 		}
 	}
 	&-input {

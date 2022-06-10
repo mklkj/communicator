@@ -9,7 +9,7 @@ import { AuthContext } from "./auth";
 
 type Props = {
 	register?: boolean;
-	onChange: () => void;
+	onChange: (set: () => void) => void;
 	onLogin?: Function;
 };
 
@@ -23,6 +23,8 @@ const LogIn = (props: Props) => {
 		passwordRepeat,
 		setPasswordRepeat,
 		handleReset,
+		wrongPassword,
+		setWrongPassword,
 	} = useLogin(register);
 
 	const { setToken } = useContext(AuthContext);
@@ -30,16 +32,18 @@ const LogIn = (props: Props) => {
 	const handleOnClick = async () => {
 		if (register) {
 			if (password !== passwordRepeat) {
+				setWrongPassword(true);
 				return;
 			}
 			try {
-				onChange();
+				onChange(() => setWrongPassword(false));
 				handleReset();
 				return axios.post("http://localhost:3005/users/register", {
 					password: password,
 					username: login,
 				});
 			} catch (err) {
+				setWrongPassword(true);
 				console.log(err);
 			}
 		}
@@ -48,9 +52,16 @@ const LogIn = (props: Props) => {
 				password: password,
 				username: login,
 			});
-			onLogin && onLogin(login);
-			return setToken(data.data);
+			if (data?.data === false) {
+				setWrongPassword(true);
+				return;
+			}
+			document.cookie = `token=${data?.data}; path=/; max-age=${60 * 60 * 24};`;
+			document.cookie = `user=${login}; path=/; max-age=${60 * 60 * 24};`;
+			onLogin && onLogin(login, data?.data);
+			return setToken(data?.data);
 		} catch (err) {
+			setWrongPassword(true);
 			console.log(err);
 		}
 	};
@@ -83,11 +94,16 @@ const LogIn = (props: Props) => {
 				<Button onClick={handleOnClick}>
 					{register ? "Register" : "Login"}
 				</Button>
-				<div className="login-container__register">
-					<span onClick={onChange}>
+				<div className="login-container__text">
+					<span onClick={() => onChange(() => setWrongPassword(false))}>
 						{register ? "Log in into account" : "Register to service"}
 					</span>
 				</div>
+				{wrongPassword && (
+					<div className="login-container__wrong">
+						<span>{register ? "Passwords don't match" : "Wrong password"}</span>
+					</div>
+				)}
 			</div>
 		</div>
 	);

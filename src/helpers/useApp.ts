@@ -13,12 +13,14 @@ type Message = {
 	text: string;
 };
 
-const useApp = (token: string) => {
+const useApp = (token: string, user: string) => {
 	const [isLoggedIn, setLogIn] = useState<Boolean>(false);
-	const [loggedUserData, setLoggedUserData] = useState<any>({});
+	const [loggedUserData, setLoggedUserData] = useState<any>(user ? user : "");
 	const [type, setType] = useState<"login" | "register" | "chat">(
 		token ? "chat" : "login"
 	);
+
+	console.log(token, "COOKIE");
 	useEffect(() => {
 		token && setType("chat");
 	}, [token]);

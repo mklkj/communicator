@@ -4,6 +4,7 @@ const useLogin = (register?: boolean) => {
 	const [login, setLogin] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [passwordRepeat, setPasswordRepeat] = useState<string>("");
+	const [wrongPassword, setWrongPassword] = useState<boolean>(false);
 
 	const handleReset = () => {
 		setLogin("");
@@ -23,6 +24,8 @@ const useLogin = (register?: boolean) => {
 		passwordRepeat,
 		setPasswordRepeat,
 		handleReset,
+		wrongPassword,
+		setWrongPassword,
 	};
 };
 

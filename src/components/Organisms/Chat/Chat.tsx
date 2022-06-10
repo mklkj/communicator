@@ -26,6 +26,7 @@ const Chat = (props: Props) => {
 
 	const { friendsVisible, handleOnHeaderClick } = useHeader();
 	const { data } = props;
+
 	const {
 		messages,
 		setMessages,
@@ -63,6 +64,8 @@ const Chat = (props: Props) => {
 					handleOnHeaderClick: handleOnHeaderClick,
 					handleOnSignOutClick: () => {
 						setLogIn(false);
+						document.cookie = "user=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+						document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
 					},
 				}}
 			/>

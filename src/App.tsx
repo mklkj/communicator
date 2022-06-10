@@ -6,6 +6,18 @@ import useApp from "./helpers/useApp";
 
 const App = () => {
 	const { token } = useContext(AuthContext);
+
+	const getCookie = (name: string) => {
+		var nameEQ = name + "=";
+		var ca = document.cookie.split(";");
+		for (var i = 0; i < ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) === " ") c = c.substring(1, c.length);
+			if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+		}
+		return null;
+	};
+
 	const {
 		messages,
 		setMessages,
@@ -18,11 +30,12 @@ const App = () => {
 		setType,
 		loggedUserData,
 		setLoggedUserData,
-	} = useApp(token as string);
+	} = useApp(
+		getCookie("token") || (token as string),
+		getCookie("user") as string
+	);
 
 	console.log(currentUser);
-
-	console.log(token);
 	return (
 		<div className="app">
 			<Main
@@ -37,6 +50,7 @@ const App = () => {
 					setType,
 					loggedUserData,
 					setLoggedUserData,
+					// handleOnLoginCookie,
 				}}
 			/>
 		</div>

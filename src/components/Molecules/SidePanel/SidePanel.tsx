@@ -21,8 +21,8 @@ const SidePanel = (props: Props) => {
 				!visible ? `side-panel--hidden` : ``
 			}`}
 		>
-			{options.map((friend, key) => (
-				<div key={key} onClick={() => handleOnClick(friend.username)}>
+			{options?.map((friend, key) => (
+				<div key={key} onClick={() => handleOnClick(friend?.username)}>
 					<FriendItem value={friend} />
 				</div>
 			))}
