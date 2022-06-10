@@ -14,15 +14,18 @@ type Props = {
 		setType: Function;
 		loggedUserData: any;
 		setLoggedUserData: Function;
+		currentFriend: any;
+		setCurrentFriend: Function;
 	};
 	type: "login" | "register" | "chat";
 };
 
 const Main = (props: Props) => {
 	const { data, type } = props;
-	const { setType, setLoggedUserData } = data;
-	const handleOnLogin = (username: string) => {
+	const { setType, setLoggedUserData, setCurrentUser } = data;
+	const handleOnLogin = (username: string, id: string) => {
 		setLoggedUserData(username);
+		setCurrentUser(id);
 	};
 	const children = () => {
 		switch (type) {

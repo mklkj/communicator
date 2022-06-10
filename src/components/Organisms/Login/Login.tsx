@@ -52,17 +52,23 @@ const LogIn = (props: Props) => {
 				password: password,
 				username: login,
 			});
-			if (data?.data === false) {
+			if (data?.data?.token === false) {
 				setWrongPassword(true);
 				return;
 			}
-			document.cookie = `token=${data?.data}; path=/; max-age=${60 * 60 * 24};`;
+			document.cookie = `token=${data?.data?.token}; path=/; max-age=${
+				60 * 60 * 24
+			};`;
 			document.cookie = `user=${login}; path=/; max-age=${60 * 60 * 24};`;
 			document.cookie = `currentDate=${Date.now()}; path=/; max-age=${
 				60 * 60 * 24
 			};`;
-			onLogin && onLogin(login, data?.data);
-			return setToken(data?.data);
+			document.cookie = `userId=${data?.data?.id}; path=/; max-age=${
+				60 * 60 * 24
+			};`;
+			console.log(data);
+			onLogin && onLogin(login, data?.data?.id);
+			return setToken(data?.data?.token);
 		} catch (err) {
 			setWrongPassword(true);
 			console.log(err);

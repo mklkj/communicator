@@ -20,6 +20,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
 		console.log("Users connected to database");
 		const db = client.db("crud-quotes");
 		const usersCollection = db.collection("users");
+		const messagesCollection = db.collection("messages");
 		app.use(express.json());
 		app.use(express.urlencoded({ extended: true }));
 
@@ -29,13 +30,29 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
 		// });
 
 		app.get("/users/list", (req, res) => {
-			usersCollection.find({}).toArray((err, result) => {
-				if (err) {
-					return res.send(err);
-				} else {
-					return res.json(result);
-				}
-			});
+			usersCollection
+				.find({})
+				.project({ username: 1 })
+				.toArray((err, result) => {
+					if (err) {
+						return res.send(err);
+					} else {
+						return res.json(result);
+					}
+				});
+		});
+
+		app.get("/user/messages", (req, res) => {
+			messagesCollection
+				.find({})
+				.project({ username: 1 })
+				.toArray((err, result) => {
+					if (err) {
+						return res.send(err);
+					} else {
+						return res.json(result);
+					}
+				});
 		});
 
 		app.post("/users/register", (req, res) => {
@@ -62,7 +79,8 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
 									req.body.username,
 									TOKEN_SECRET
 								);
-								return res.json(token);
+								const responseBody = { token, id: response._id };
+								return res.json(responseBody);
 							}
 							return res.send(false);
 						}

@@ -5,13 +5,14 @@ import { Person } from "../../../helpers/useApp";
 
 type Props = {
 	className?: string;
+	value?: string;
 	visible: boolean;
 	options: Person[];
 	onClick: Function;
 };
 
 const SidePanel = (props: Props) => {
-	const { className, options, visible, onClick } = props;
+	const { className, options, visible, onClick, value } = props;
 	const handleOnClick = (name: string) => {
 		onClick(name);
 	};
@@ -22,8 +23,8 @@ const SidePanel = (props: Props) => {
 			}`}
 		>
 			{options?.map((friend, key) => (
-				<div key={key} onClick={() => handleOnClick(friend?.username)}>
-					<FriendItem value={friend} />
+				<div key={key} onClick={() => handleOnClick(friend?._id)}>
+					<FriendItem value={value} friend={friend} />
 				</div>
 			))}
 		</div>

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 type Person = {
-	id: number;
+	_id: string;
 	username: string;
 };
 
@@ -24,11 +24,13 @@ export const getCookie = (name: string) => {
 	return null;
 };
 
-const useApp = (token: string, user: string) => {
+const useApp = (token: string) => {
 	const [isLoggedIn, setLogIn] = useState<Boolean>(false);
-	const [loggedUserData, setLoggedUserData] = useState<any>(user ? user : "");
+	const [loggedUserData, setLoggedUserData] = useState<any>(
+		getCookie("user") ? getCookie("user") : ""
+	);
 	const [type, setType] = useState<"login" | "register" | "chat">(
-		token ? "chat" : "login"
+		getCookie("token") || token ? "chat" : "login"
 	);
 
 	console.log(token, "COOKIE");
@@ -117,13 +119,16 @@ const useApp = (token: string, user: string) => {
 		},
 	]);
 	const [friends, setFriends] = useState<Person[]>([]);
-	const [currentUser, setCurrentUser] = useState<string>();
+	const [currentUser, setCurrentUser] = useState<string>(
+		getCookie("userId") as string
+	);
+	const [currentFriend, setCurrentFriend] = useState<string>();
 
 	useEffect(() => {
 		const getUsers = async () => {
 			return await axios.get("http://localhost:3005/users/list").then((e) => {
 				setFriends(e.data);
-				setCurrentUser(e.data[0].username);
+				setCurrentFriend(e.data[0]._id);
 			});
 		};
 		try {
@@ -132,6 +137,7 @@ const useApp = (token: string, user: string) => {
 			console.log(err);
 		}
 	}, []);
+	console.log(currentUser, currentFriend, "TOKENS");
 	return {
 		messages,
 		setMessages,
@@ -145,6 +151,8 @@ const useApp = (token: string, user: string) => {
 		setType,
 		loggedUserData,
 		setLoggedUserData,
+		currentFriend,
+		setCurrentFriend,
 	};
 };
 

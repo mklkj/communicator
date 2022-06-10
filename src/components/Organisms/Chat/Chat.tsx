@@ -18,6 +18,8 @@ type Props = {
 		setCurrentUser: Function;
 		loggedUserData: any;
 		setLoggedUserData: Function;
+		currentFriend: any;
+		setCurrentFriend: Function;
 	};
 };
 
@@ -34,6 +36,8 @@ const Chat = (props: Props) => {
 		setLogIn,
 		currentUser,
 		setCurrentUser,
+		currentFriend,
+		setCurrentFriend,
 		loggedUserData,
 	} = data;
 	const messagesAreaRef = useRef<HTMLDivElement>(null);
@@ -74,7 +78,8 @@ const Chat = (props: Props) => {
 			<SidePanel
 				options={friends}
 				visible={friendsVisible}
-				onClick={setCurrentUser}
+				value={currentFriend}
+				onClick={setCurrentFriend}
 				className={`chat__friends`}
 			/>
 

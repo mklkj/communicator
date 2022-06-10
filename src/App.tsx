@@ -19,10 +19,9 @@ const App = () => {
 		setType,
 		loggedUserData,
 		setLoggedUserData,
-	} = useApp(
-		getCookie("token") || (token as string),
-		getCookie("user") as string
-	);
+		currentFriend,
+		setCurrentFriend,
+	} = useApp(token as string);
 
 	console.log(currentUser);
 	return (
@@ -39,6 +38,8 @@ const App = () => {
 					setType,
 					loggedUserData,
 					setLoggedUserData,
+					currentFriend,
+					setCurrentFriend,
 					// handleOnLoginCookie,
 				}}
 			/>

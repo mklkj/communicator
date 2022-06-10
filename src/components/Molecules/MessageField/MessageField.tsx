@@ -5,12 +5,12 @@ import { Message } from "../../../helpers/useApp";
 type Props = {
 	onChange: { setMessages: (message: any) => void };
 	className?: string;
-	socket: any,
+	socket: any;
 	data: any;
 };
 
 const userMessage = (data: { id: number }, text: string) => ({
-	id: data?.id,
+	id: data,
 	avatar: "",
 	text: text,
 	uid: true,
@@ -34,7 +34,7 @@ const MessageField = (props: Props) => {
 		if (socket == null) return;
 
 		socket.on("new_message", (data: any) => {
-			setMessages((messages: Message[]) => [...messages, data,]);
+			setMessages((messages: Message[]) => [...messages, data]);
 		});
 	}, [socket]);
 
