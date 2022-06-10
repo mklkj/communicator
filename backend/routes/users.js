@@ -23,11 +23,6 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
 		app.use(express.json());
 		app.use(express.urlencoded({ extended: true }));
 
-		// app.get("/users", (req, res) => {
-		// 	console.log(res);
-		// 	res.send("Hello");
-		// });
-
 		app.get("/users/list", (req, res) => {
 			usersCollection.find({}).toArray((err, result) => {
 				if (err) {
@@ -67,6 +62,10 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
 							return res.send(false);
 						}
 					);
+				})
+				.catch((reason) => {
+					console.error(reason);
+					res.status(400).json({error: reason.message});
 				});
 		});
 	}
