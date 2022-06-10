@@ -39,8 +39,6 @@ const Header = (props: Props) => {
 		};
 	}, []);
 
-	console.log(time, "TIME");
-
 	return (
 		<form className={`header ${className}`}>
 			<div
