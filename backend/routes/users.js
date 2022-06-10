@@ -24,9 +24,9 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
 		app.use(express.json());
 		app.use(express.urlencoded({ extended: true }));
 
-		app.post("/users/list", (req, res) => {
+		app.get("/users/list", (req, res) => {
 			usersCollection
-				.find({ _id: { $ne: req.body.uid } })
+				.find({})
 				.project({ username: 1 })
 				.toArray((err, result) => {
 					if (err) {

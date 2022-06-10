@@ -48,12 +48,13 @@ const useApp = (token: string) => {
 
 	useEffect(() => {
 		const getUsers = async () => {
-			return await axios
-				.post("http://localhost:3005/users/list", { uid: currentUser })
-				.then((e) => {
-					setFriends(e.data.filter((el: any) => el._id !== currentUser));
-					setCurrentFriend(e.data[0]._id);
-				});
+			return await axios.get("http://localhost:3005/users/list").then((e) => {
+				const filteredCurrent = e.data.filter(
+					(el: any) => el._id !== currentUser
+				);
+				setFriends(filteredCurrent);
+				setCurrentFriend(filteredCurrent[0]._id);
+			});
 		};
 		try {
 			getUsers();
