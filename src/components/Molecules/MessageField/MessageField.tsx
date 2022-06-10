@@ -7,6 +7,8 @@ type Props = {
 	className?: string;
 	socket: any;
 	data: any;
+	sender?: string;
+	receiver?: string;
 };
 
 const userMessage = (data: { id: number }, text: string) => ({
@@ -17,16 +19,21 @@ const userMessage = (data: { id: number }, text: string) => ({
 });
 
 const MessageField = (props: Props) => {
-	const { className, socket } = props;
+	const { className, socket, sender, receiver } = props;
 	const { setMessages } = props.onChange;
 
 	const [inputValue, setInputValue] = useState("");
 
 	const handleOnClick = async (e: any) => {
 		e.preventDefault();
-		socket.emit("add_message", {
+		const message = {
+			uid: sender,
+			receiver: receiver,
+			sender: sender,
 			text: inputValue ? inputValue : "👍",
-		});
+			timestamp: +new Date(),
+		};
+		socket.emit("add_message", message);
 		setInputValue("");
 	};
 

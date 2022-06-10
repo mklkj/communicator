@@ -9,8 +9,10 @@ type Person = {
 type Message = {
 	id: number;
 	avatar: string;
-	uid: string | boolean;
+	uid?: string | boolean;
 	text: string;
+	sender?: string;
+	receiver?: string;
 };
 
 export const getCookie = (name: string) => {
@@ -42,79 +44,79 @@ const useApp = (token: string) => {
 		{
 			id: 1,
 			avatar: "",
-			uid: "",
+			sender: "62a2de9191de43c94d5a3b9b",
 			text: "Litwo! Ojczyzno moja! Ty jesteś jak zdrowie",
 		},
 		{
 			id: 2,
 			avatar: "",
-			uid: true,
+			sender: "629cc3afd830cd4d4b7894bd",
 			text: "Ile cię trzeba cenić, ten tylko się dowie,\nKto cię stracił",
 		},
 		{
 			id: 3,
 			avatar: "",
-			uid: "",
+			sender: "62a2de9191de43c94d5a3b9b",
 			text: "Dziś piękność twą w całej ozdobie\nWidzę i opisuję, bo tęsknię po tobie",
 		},
 		{
 			id: 4,
 			avatar: "",
-			uid: true,
+			sender: "629cc3afd830cd4d4b7894bd",
 			text: "Panno święta, co Jasnej bronisz Częstochowy\nI w Ostrej świecisz Bramie!",
 		},
 		{
 			id: 5,
 			avatar: "",
-			uid: "",
+			sender: "62a2de9191de43c94d5a3b9b",
 			text: "Ty, co gród zamkowy\nNowogródzki ochraniasz z jego wiernym ludem!",
 		},
 		{
 			id: 5,
 			avatar: "",
-			uid: true,
+			sender: "629cc3afd830cd4d4b7894bd",
 			text: "Jak mnie dziecko do zdrowia powróciłaś cudem",
 		},
 		{
 			id: 5,
 			avatar: "",
-			uid: "",
+			sender: "62a2de9191de43c94d5a3b9b",
 			text: "Gdy od płaczącej matki, pod Twoją opiekę\nOfiarowany martwą podniosłem powiekę",
 		},
 		{
 			id: 5,
 			avatar: "",
-			uid: true,
+			sender: "629cc3afd830cd4d4b7894bd",
 			text: "I zaraz mogłem pieszo, do Twych świątyń progu\nIść za wrócone życie podziękować Bogu",
 		},
 		{
 			id: 5,
 			avatar: "",
-			uid: "",
+			sender: "62a2de9191de43c94d5a3b9b",
 			text: "Tak nas powrócisz cudem na Ojczyzny łono!...",
 		},
 		{
 			id: 5,
 			avatar: "",
-			uid: true,
+			sender: "629cc3afd830cd4d4b7894bd",
 			text: "Tymczasem, przenoś moją duszę utęsknioną\nDo tych pagórków leśnych, do tych łąk zielonych,\nSzeroko nad błękitnym Niemnem rozciągnionych",
 		},
 		{
 			id: 5,
 			avatar: "",
-			uid: "",
+			sender: "62a2de9191de43c94d5a3b9b",
 			text: "Do tych pól malowanych zbożem rozmaitem,\nWyzłacanych pszenicą, posrebrzanych żytem",
 		},
 		{
 			id: 5,
 			avatar: "",
-			uid: true,
+			sender: "629cc3afd830cd4d4b7894bd",
 			text: "Gdzie bursztynowy świerzop, gryka jak śnieg biała,\nGdzie panieńskim rumieńcem dzięcielina pała,",
 		},
 		{
 			id: 5,
 			avatar: "",
-			uid: "",
+			sender: "62a2de9191de43c94d5a3b9b",
 			text: "A wszystko przepasane jakby wstęgą, miedzą\nZieloną, na niej zrzadka ciche grusze siedzą",
 		},
 	]);

@@ -23,7 +23,6 @@ const App = () => {
 		setCurrentFriend,
 	} = useApp(token as string);
 
-	console.log(currentUser);
 	return (
 		<div className="app">
 			<Main

@@ -85,12 +85,16 @@ const Chat = (props: Props) => {
 
 			<div ref={messagesAreaRef} className={`chat__messages`}>
 				{messages &&
-					messages.map((msg) => <MessageItem key={msg.id} message={msg} />)}
+					messages.map((msg) => (
+						<MessageItem key={msg.id} message={msg} value={currentUser} />
+					))}
 			</div>
 			<MessageField
 				className={"chat__input"}
 				socket={socket}
 				onChange={{ setMessages }}
+				sender={currentUser}
+				receiver={currentFriend}
 				data={currentUser}
 			/>
 		</div>
