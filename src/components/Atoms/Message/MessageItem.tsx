@@ -1,6 +1,6 @@
 import React from "react";
 import "./Message.scss";
-import {Message} from "../../../helpers/useApp";
+import { Message } from "../../../helpers/useApp";
 
 type Props = {
 	message: Message;
@@ -9,14 +9,14 @@ type Props = {
 const MessageItem = (props: Props) => {
 	const { text, uid } = props.message;
 
-	const messageClass = uid === true ? "sent" : "received";
+	const messageClass = uid ? "sent" : "received";
 
 	return (
 		<>
 			<div className={`message message--${messageClass}`}>
 				<img
 					className="message__avatar"
-					src={"https://i.pravatar.cc/40?u=" + uid}
+					src={uid ? "/male1.jpg" : "/male2.jpg"}
 				/>
 				<p>{text}</p>
 			</div>
