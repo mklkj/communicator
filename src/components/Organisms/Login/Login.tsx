@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 
 import Button from "../../Atoms/Button/Button";
@@ -23,8 +23,8 @@ const LogIn = (props: Props) => {
 		passwordRepeat,
 		setPasswordRepeat,
 		handleReset,
-		wrongPassword,
-		setWrongPassword,
+		errorMessage,
+        setErrorMessage,
 	} = useLogin(register);
 
 	const { setToken } = useContext(AuthContext);
@@ -32,28 +32,32 @@ const LogIn = (props: Props) => {
 	const handleOnClick = async () => {
 		if (register) {
 			if (password !== passwordRepeat) {
-				setWrongPassword(true);
+                setErrorMessage("Passwords don't match");
 				return;
 			}
 			try {
-				onChange(() => setWrongPassword(false));
 				handleReset();
-				return axios.post("http://localhost:3005/users/register", {
-					password: password,
-					username: login,
-				});
+                await axios.post("http://localhost:3005/users/register", {
+                    password: password,
+                    username: login,
+                });
+				onChange(() => setErrorMessage(""));
 			} catch (err) {
-				setWrongPassword(true);
-				console.log(err);
+                // @ts-ignore
+                if (err.response.status === 400) {
+                    setErrorMessage("Account already exists");
+                } else { // @ts-ignore
+                    setErrorMessage(`Unknown error: ${err.message}`);
+                }
 			}
-		}
-		try {
+		} else try {
 			const data = await axios.post("http://localhost:3005/users/login", {
 				password: password,
 				username: login,
 			});
-			if (data?.data?.token === false) {
-				setWrongPassword(true);
+
+			if (data?.data === false) {
+                setErrorMessage('Wrong password');
 				return;
 			}
 			document.cookie = `token=${data?.data?.token}; path=/; max-age=${
@@ -70,7 +74,8 @@ const LogIn = (props: Props) => {
 			onLogin && onLogin(login, data?.data?.id);
 			return setToken(data?.data?.token);
 		} catch (err) {
-			setWrongPassword(true);
+            // @ts-ignore
+            setErrorMessage(`Unknown error: ${err.message}`);
 			console.log(err);
 		}
 	};
@@ -95,7 +100,7 @@ const LogIn = (props: Props) => {
 					<Input
 						value={passwordRepeat}
 						onChange={setPasswordRepeat}
-						placeholder="reapet password"
+						placeholder="repeat password"
 						type="password"
 						className="login-input"
 					/>
@@ -104,13 +109,13 @@ const LogIn = (props: Props) => {
 					{register ? "Register" : "Login"}
 				</Button>
 				<div className="login-container__text">
-					<span onClick={() => onChange(() => setWrongPassword(false))}>
+					<span onClick={() => onChange(() => setErrorMessage(""))}>
 						{register ? "Log in into account" : "Register to service"}
 					</span>
 				</div>
-				{wrongPassword && (
+				{errorMessage && (
 					<div className="login-container__wrong">
-						<span>{register ? "Passwords don't match" : "Wrong password"}</span>
+						<span>{errorMessage}</span>
 					</div>
 				)}
 			</div>
