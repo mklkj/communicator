@@ -51,20 +51,30 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
 		});
 
 		app.post("/users/register", (req, res) => {
-			bcrypt.hash(req.body.password, 11, function (err, hash) {
-				usersCollection
-					.insertOne({
-						username: req.body.username,
-						password: hash,
-					})
-					.then((result) => res.send("User added"));
-			});
+			usersCollection
+				.count({ username: req.body.username })
+				.then((count) => {
+					if (count > 0) {
+						return res.status(400).json({ error: "User already exists" })
+					}
+					bcrypt.hash(req.body.password, 11, function (err, hash) {
+						usersCollection
+							.insertOne({
+								username: req.body.username,
+								password: hash,
+							})
+							.then((result) => res.send("User added"));
+					});
+				});
 		});
 
 		app.post("/users/login", (req, res) => {
 			usersCollection
 				.findOne({ username: req.body.username })
 				.then((response) => {
+					if (response == null) {
+						return res.send(false);
+					}
 					bcrypt.compare(
 						req.body.password,
 						response.password,
