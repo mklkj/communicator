@@ -40,10 +40,11 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
 		app.post("/user/messages", (req, res) => {
 			messagesCollection
 				.find({
-					$or: [{ sender: req.body.uid }, { receiver: req.body.uid }],
-					$or: [{ sender: req.body.friend }, { receiver: req.body.friend }],
+					$or: [
+						{ sender: req.body.uid, receiver: req.body.friend },
+						{ sender: req.body.friend, receiver: req.body.uid },
+					],
 				})
-				// .project({ username: 1 })
 				.toArray((err, result) => {
 					if (err) {
 						return res.send(err);
