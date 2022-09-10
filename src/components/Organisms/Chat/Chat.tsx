@@ -83,7 +83,7 @@ const Chat = (props: Props) => {
 
 			<div ref={messagesAreaRef} className={`chat__messages`}>
 				{messages &&
-					messages.map((msg) => (
+					messages?.map((msg) => (
 						<MessageItem key={msg.id} message={msg} value={currentUser} />
 					))}
 			</div>
