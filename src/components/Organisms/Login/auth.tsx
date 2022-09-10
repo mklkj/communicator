@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { getCookie } from "../../../helpers/useApp";
 
 interface DefaultState {
 	token: null | string;
@@ -22,8 +23,13 @@ interface Props {
 
 export const AuthContextProvider = ({ children }: Props) => {
 	const [token, setToken] = useState<null | string>(null);
-	const [isPasswordConfirmed, setIsPasswordConfirmed] =
-		useState<boolean>(false);
+	const [isPasswordConfirmed, setIsPasswordConfirmed] = useState<boolean>(
+		getCookie("isPasswordConfirmed") === undefined
+			? true
+			: getCookie("isPasswordConfirmed") === "true"
+			? true
+			: false
+	);
 
 	const value = {
 		token,

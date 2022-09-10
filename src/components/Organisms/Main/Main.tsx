@@ -28,7 +28,6 @@ const Main = (props: Props) => {
 		setLoggedUserData(username);
 		setCurrentUser(id);
 	};
-	console.log(data);
 	const children = () => {
 		switch (type) {
 			case "login":

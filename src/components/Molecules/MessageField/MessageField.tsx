@@ -34,7 +34,6 @@ const MessageField = (props: Props) => {
 		if (socket == null) return;
 
 		socket.on("new_message", (data: any) => {
-			console.log(data, sender);
 			(sender === data.receiver || sender === data.sender) &&
 				setMessages((messages: Message[]) => [...messages, data]);
 		});

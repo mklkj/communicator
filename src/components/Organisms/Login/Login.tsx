@@ -61,13 +61,10 @@ const LogIn = (props: Props) => {
 			}
 			try {
 				handleReset();
-				const data = await axios.post(
-					"http://localhost:3005/user/confirm-password",
-					{
-						password: password,
-						username: login || logged,
-					}
-				);
+				const data = await post("/user/confirm-password", {
+					password: password,
+					username: login || logged,
+				});
 				document.cookie = `isPasswordConfirmed=${true}; path=/; max-age=${
 					60 * 60 * 24
 				};`;
@@ -88,7 +85,7 @@ const LogIn = (props: Props) => {
 			}
 		} else
 			try {
-				const data = await post("http://localhost:3005/users/login", {
+				const data = await post("/users/login", {
 					password: password,
 					username: login || logged,
 				});
@@ -112,7 +109,6 @@ const LogIn = (props: Props) => {
 				document.cookie = `userId=${data?.data?.id}; path=/; max-age=${
 					60 * 60 * 24
 				};`;
-				console.log(data);
 				onLogin && onLogin(login || logged, data?.data?.id);
 				setIsPasswordConfirmed(data?.data?.isPasswordConfirmed);
 				!data?.data?.isPasswordConfirmed
@@ -128,6 +124,7 @@ const LogIn = (props: Props) => {
 	return (
 		<div className="login">
 			<div className="login-container">
+				{activate && <span>ACTIVATE YOUR ACCOUNT, CHANGE PASSWORD</span>}
 				{!activate && (
 					<Input
 						value={login}

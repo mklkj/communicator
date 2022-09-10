@@ -108,7 +108,6 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
 			usersCollection
 				.findOne({ username: req.body.username })
 				.then((response) => {
-					console.log(response, "RESPONSe");
 					if (response == null) {
 						return res.send(false);
 					}

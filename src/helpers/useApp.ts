@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {get, post} from "./api";
+import { get, post } from "./api";
 
 type Person = {
 	_id: string;
@@ -32,7 +32,6 @@ const useApp = (token: string, isPasswordConfirmed: boolean) => {
 		getCookie("user") ? getCookie("user") : ""
 	);
 	const isToken = getCookie("token") || token ? "chat" : "login";
-	console.log(isPasswordConfirmed, isToken);
 	const isConfirmed =
 		getCookie("isPasswordConfirmed") === undefined ||
 		getCookie("isPasswordConfirmed") ||
@@ -44,6 +43,11 @@ const useApp = (token: string, isPasswordConfirmed: boolean) => {
 	);
 
 	useEffect(() => {
+		console.log(isPasswordConfirmed);
+		if (!token && !isPasswordConfirmed) {
+			setType("activate");
+			return;
+		}
 		token && setType("chat");
 	}, [token]);
 
@@ -76,8 +80,7 @@ const useApp = (token: string, isPasswordConfirmed: boolean) => {
 			return await post("/user/messages", {
 				uid: currentUser,
 				friend: currentFriend,
-			})
-			.then((e) => {
+			}).then((e) => {
 				setMessages(e.data);
 			});
 		};

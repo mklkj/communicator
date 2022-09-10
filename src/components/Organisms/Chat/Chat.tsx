@@ -6,7 +6,7 @@ import MessageField from "../../Molecules/MessageField/MessageField";
 import { Message, Person } from "../../../helpers/useApp";
 import Header from "../../Molecules/Header/Header";
 import useHeader from "../../Molecules/Header/useHeader";
-import {ws} from "../../../helpers/api";
+import { ws } from "../../../helpers/api";
 
 type Props = {
 	data: {
@@ -40,7 +40,7 @@ const Chat = (props: Props) => {
 		loggedUserData,
 		setType,
 	} = data;
-	console.log(loggedUserData);
+
 	const messagesAreaRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -51,7 +51,7 @@ const Chat = (props: Props) => {
 	});
 
 	useEffect(() => {
-		const newSocket = ws()
+		const newSocket = ws();
 		setSocket(newSocket);
 		return () => {
 			newSocket.close();
