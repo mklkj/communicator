@@ -23,7 +23,7 @@ type Props = {
 
 const Main = (props: Props) => {
 	const { data, type } = props;
-	const { setType, setLoggedUserData, setCurrentUser } = data;
+	const { setType, setLoggedUserData, setCurrentUser, loggedUserData } = data;
 	const handleOnLogin = (username: string, id: string) => {
 		setLoggedUserData(username);
 		setCurrentUser(id);
@@ -34,6 +34,7 @@ const Main = (props: Props) => {
 			case "login":
 				return (
 					<LogIn
+						logged={loggedUserData}
 						onChange={(type, set) => {
 							setType(type);
 							set();
@@ -44,6 +45,7 @@ const Main = (props: Props) => {
 			case "register":
 				return (
 					<LogIn
+						logged={loggedUserData}
 						register
 						onChange={(type, set) => {
 							setType(type);
@@ -56,6 +58,7 @@ const Main = (props: Props) => {
 					<LogIn
 						// register
 						activate
+						logged={loggedUserData}
 						onChange={(type, set) => {
 							setType(type);
 							set();

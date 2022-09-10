@@ -33,7 +33,12 @@ const useApp = (token: string, isPasswordConfirmed: boolean) => {
 	);
 	const isToken = getCookie("token") || token ? "chat" : "login";
 	console.log(isPasswordConfirmed, isToken);
-	const isConfirmed = isPasswordConfirmed ? isToken : "activate";
+	const isConfirmed =
+		getCookie("isPasswordConfirmed") === undefined ||
+		getCookie("isPasswordConfirmed") ||
+		isPasswordConfirmed
+			? isToken
+			: "activate";
 	const [type, setType] = useState<"login" | "register" | "chat" | "activate">(
 		isConfirmed
 	);

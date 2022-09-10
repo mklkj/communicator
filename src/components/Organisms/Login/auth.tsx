@@ -22,7 +22,8 @@ interface Props {
 
 export const AuthContextProvider = ({ children }: Props) => {
 	const [token, setToken] = useState<null | string>(null);
-	const [isPasswordConfirmed, setIsPasswordConfirmed] = useState<boolean>(true);
+	const [isPasswordConfirmed, setIsPasswordConfirmed] =
+		useState<boolean>(false);
 
 	const value = {
 		token,

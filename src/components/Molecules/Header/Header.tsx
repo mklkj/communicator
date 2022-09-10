@@ -55,7 +55,7 @@ const Header = (props: Props) => {
 				{time && <div>Czas pracy {time}</div>}
 			</div>
 			<div>
-				{text === "admin" && (
+				{text?.includes("admin") && (
 					<Button onClick={() => setType("register")} className="button-margin">
 						Create new user
 					</Button>

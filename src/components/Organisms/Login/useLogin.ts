@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useLogin = (register?: boolean) => {
+const useLogin = (activate?: boolean, register?: boolean) => {
 	const [login, setLogin] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [passwordRepeat, setPasswordRepeat] = useState<string>("");
@@ -14,7 +14,7 @@ const useLogin = (register?: boolean) => {
 
 	useEffect(() => {
 		handleReset();
-	}, [register]);
+	}, [activate, register]);
 
 	return {
 		login,

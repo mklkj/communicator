@@ -73,14 +73,34 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
 
 		app.post("/user/confirm-password", (req, res) => {
 			bcrypt.hash(req.body.password, 11, (err, hash) => {
-				usersCollection.findOneAndUpdate(
-					{ username: req.body.username },
-					{
-						username: req.body.username,
-						password: hash,
-						isPasswordConfirmed: true,
-					}
-				);
+				usersCollection
+					// .replaceOne(
+					// 	{ username: req.body.username },
+					// 	{
+					// 		username: req.body.username,
+					// 		password: hash,
+					// 		isPasswordConfirmed: true,
+					// 	}
+					// )
+					.updateOne(
+						{ username: req.body.username },
+						{
+							$set: {
+								username: req.body.username,
+								password: hash,
+								isPasswordConfirmed: true,
+							},
+						}
+					)
+					.then((response) => {
+						return res.json({ isPasswordConfirmed: true });
+					})
+					.catch((reason) => {
+						console.error(reason);
+						res
+							.status(400)
+							.json({ isPasswordConfirmed: false, error: reason.message });
+					});
 			});
 		});
 

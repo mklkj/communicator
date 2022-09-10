@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import axios from "axios";
 
 import Button from "../../Atoms/Button/Button";
@@ -9,13 +9,14 @@ import { AuthContext } from "./auth";
 
 type Props = {
 	activate?: boolean;
+	logged?: string;
 	register?: boolean;
 	onChange: (type: string, set: () => void) => void;
 	onLogin?: Function;
 };
 
 const LogIn = (props: Props) => {
-	const { activate, register, onChange, onLogin } = props;
+	const { activate, logged, register, onChange, onLogin } = props;
 	const {
 		login,
 		password,
@@ -26,7 +27,7 @@ const LogIn = (props: Props) => {
 		handleReset,
 		errorMessage,
 		setErrorMessage,
-	} = useLogin(register);
+	} = useLogin(activate, register);
 
 	const { isPasswordConfirmed, setToken, setIsPasswordConfirmed } =
 		useContext(AuthContext);
@@ -41,7 +42,7 @@ const LogIn = (props: Props) => {
 				handleReset();
 				await axios.post("http://localhost:3005/users/register", {
 					password: password,
-					username: login,
+					username: login || logged,
 				});
 				onChange("chat", () => setErrorMessage(""));
 			} catch (err) {
@@ -60,12 +61,23 @@ const LogIn = (props: Props) => {
 			}
 			try {
 				handleReset();
-				await axios.post("http://localhost:3005/users/confirm-password", {
-					password: password,
-					username: login,
-				});
-				onChange("login", () => setErrorMessage(""));
+				const data = await axios.post(
+					"http://localhost:3005/user/confirm-password",
+					{
+						password: password,
+						username: login || logged,
+					}
+				);
+				document.cookie = `isPasswordConfirmed=${true}; path=/; max-age=${
+					60 * 60 * 24
+				};`;
+				onChange(data.data.isPasswordConfirmed ? "chat" : "login", () =>
+					setErrorMessage("")
+				);
 			} catch (err) {
+				document.cookie = `isPasswordConfirmed=${false}; path=/; max-age=${
+					60 * 60 * 24
+				};`;
 				// @ts-ignore
 				if (err.response.status === 400) {
 					setErrorMessage("Account already exists");
@@ -78,7 +90,7 @@ const LogIn = (props: Props) => {
 			try {
 				const data = await axios.post("http://localhost:3005/users/login", {
 					password: password,
-					username: login,
+					username: login || logged,
 				});
 
 				if (data?.data === false) {
@@ -88,7 +100,12 @@ const LogIn = (props: Props) => {
 				document.cookie = `token=${data?.data?.token}; path=/; max-age=${
 					60 * 60 * 24
 				};`;
-				document.cookie = `user=${login}; path=/; max-age=${60 * 60 * 24};`;
+				document.cookie = `user=${login || logged}; path=/; max-age=${
+					60 * 60 * 24
+				};`;
+				document.cookie = `isPasswordConfirmed=${
+					data?.data?.isPasswordConfirmed
+				}; path=/; max-age=${60 * 60 * 24};`;
 				document.cookie = `currentDate=${Date.now()}; path=/; max-age=${
 					60 * 60 * 24
 				};`;
@@ -96,9 +113,11 @@ const LogIn = (props: Props) => {
 					60 * 60 * 24
 				};`;
 				console.log(data);
-				onLogin && onLogin(login, data?.data?.id);
+				onLogin && onLogin(login || logged, data?.data?.id);
 				setIsPasswordConfirmed(data?.data?.isPasswordConfirmed);
-				return setToken(data?.data?.token);
+				!data?.data?.isPasswordConfirmed
+					? onChange("activate", () => setErrorMessage(""))
+					: setToken(data?.data?.token);
 			} catch (err) {
 				// @ts-ignore
 				setErrorMessage(`Unknown error: ${err.message}`);
@@ -124,7 +143,7 @@ const LogIn = (props: Props) => {
 					type="password"
 					className="login-input"
 				/>
-				{register && (
+				{(register || activate) && (
 					<Input
 						value={passwordRepeat}
 						onChange={setPasswordRepeat}
@@ -137,7 +156,7 @@ const LogIn = (props: Props) => {
 					{register ? "Register" : "Login"}
 				</Button>
 				<div className="login-container__text">
-					{register && (
+					{(register || activate) && (
 						<span onClick={() => onChange("", () => setErrorMessage(""))}>
 							{register && "Come back to chat"}
 						</span>
