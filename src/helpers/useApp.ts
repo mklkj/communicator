@@ -43,10 +43,10 @@ const useApp = (token: string, isPasswordConfirmed: boolean) => {
 	);
 
 	useEffect(() => {
-		if (token && !isPasswordConfirmed) {
-			setType("activate");
-			return;
-		}
+		// if (token && !isPasswordConfirmed) {
+		// 	setType("activate");
+		// 	return;
+		// }
 		token && setType("chat");
 	}, [token]);
 
