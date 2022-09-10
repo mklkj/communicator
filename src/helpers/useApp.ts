@@ -43,8 +43,7 @@ const useApp = (token: string, isPasswordConfirmed: boolean) => {
 	);
 
 	useEffect(() => {
-		console.log(isPasswordConfirmed);
-		if (!token && !isPasswordConfirmed) {
+		if (token && !isPasswordConfirmed) {
 			setType("activate");
 			return;
 		}

@@ -124,7 +124,12 @@ const LogIn = (props: Props) => {
 	return (
 		<div className="login">
 			<div className="login-container">
-				{activate && <span>ACTIVATE YOUR ACCOUNT, CHANGE PASSWORD</span>}
+				{activate && (
+					<span>
+						ACTIVATE YOUR ACCOUNT,
+						<br /> CHANGE PASSWORD
+					</span>
+				)}
 				{!activate && (
 					<Input
 						value={login}
