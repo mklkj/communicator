@@ -32,8 +32,10 @@ const useApp = (token: string, isPasswordConfirmed: boolean) => {
 		getCookie("user") ? getCookie("user") : ""
 	);
 	const isToken = getCookie("token") || token ? "chat" : "login";
+	console.log(getCookie("isPasswordConfirmed"));
 	const isConfirmed =
 		getCookie("isPasswordConfirmed") === undefined ||
+		getCookie("isPasswordConfirmed") === null ||
 		getCookie("isPasswordConfirmed") ||
 		isPasswordConfirmed
 			? isToken
