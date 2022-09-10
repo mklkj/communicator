@@ -21,6 +21,7 @@
 	}
 	&__friends {
 		grid-area: friends;
+		overflow-y: auto;
 	}
 	&__messages {
 		grid-area: messages;
