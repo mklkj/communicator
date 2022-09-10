@@ -159,7 +159,7 @@ const LogIn = (props: Props) => {
 				</Button>
 				<div className="login-container__text">
 					{(register || activate) && (
-						<span onClick={() => onChange("", () => setErrorMessage(""))}>
+						<span onClick={() => onChange("chat", () => setErrorMessage(""))}>
 							{register && "Come back to chat"}
 						</span>
 					)}
