@@ -6,7 +6,7 @@ import MessageField from "../../Molecules/MessageField/MessageField";
 import { Message, Person } from "../../../helpers/useApp";
 import Header from "../../Molecules/Header/Header";
 import useHeader from "../../Molecules/Header/useHeader";
-import io from "socket.io-client";
+import {ws} from "../../../helpers/api";
 
 type Props = {
 	data: {
@@ -51,7 +51,7 @@ const Chat = (props: Props) => {
 	});
 
 	useEffect(() => {
-		const newSocket = io(`http://${window.location.hostname}:3001`); // todo: add some token to url?
+		const newSocket = ws()
 		setSocket(newSocket);
 		return () => {
 			newSocket.close();

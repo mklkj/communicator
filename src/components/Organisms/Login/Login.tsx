@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import axios from "axios";
+import {post} from "../../../helpers/api";
 
 import Button from "../../Atoms/Button/Button";
 import Input from "../../Atoms/Input/Input";
@@ -39,7 +39,7 @@ const LogIn = (props: Props) => {
 			}
 			try {
 				handleReset();
-				await axios.post("http://localhost:3005/users/register", {
+				await post("/users/register", {
 					password: password,
 					username: login,
 				});
@@ -60,7 +60,7 @@ const LogIn = (props: Props) => {
 			}
 			try {
 				handleReset();
-				await axios.post("http://localhost:3005/users/confirm-password", {
+				await post("http://localhost:3005/users/confirm-password", {
 					password: password,
 					username: login,
 				});
@@ -76,7 +76,7 @@ const LogIn = (props: Props) => {
 			}
 		} else
 			try {
-				const data = await axios.post("http://localhost:3005/users/login", {
+				const data = await post("http://localhost:3005/users/login", {
 					password: password,
 					username: login,
 				});
