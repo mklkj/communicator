@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
+import {get, post} from "./api";
 
 type Person = {
 	_id: string;
@@ -51,7 +51,7 @@ const useApp = (token: string, isPasswordConfirmed: boolean) => {
 
 	useEffect(() => {
 		const getUsers = async () => {
-			return await axios.get("http://localhost:3005/users/list").then((e) => {
+			return await get("/users/list").then((e) => {
 				const filteredCurrent = e.data.filter(
 					(el: any) => el._id !== currentUser
 				);
@@ -68,14 +68,13 @@ const useApp = (token: string, isPasswordConfirmed: boolean) => {
 
 	useEffect(() => {
 		const getMessages = async () => {
-			return await axios
-				.post("http://localhost:3005/user/messages", {
-					uid: currentUser,
-					friend: currentFriend,
-				})
-				.then((e) => {
-					setMessages(e.data);
-				});
+			return await post("/user/messages", {
+				uid: currentUser,
+				friend: currentFriend,
+			})
+			.then((e) => {
+				setMessages(e.data);
+			});
 		};
 		try {
 			if (currentFriend) getMessages();
