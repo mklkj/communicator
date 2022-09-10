@@ -7,7 +7,7 @@ const socketRoute = require("./routes/socket");
 const PORT = 3005;
 
 app.use((req, res, next) => {
-	res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	res.setHeader(
 		"Access-Control-Allow-Methods",
 		"GET, POST, OPTIONS, PUT, PATCH, DELETE"
@@ -20,8 +20,8 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.use("/", usersRoute);
-app.use("/", socketRoute);
+app.use("/api/", usersRoute);
+app.use("/api/", socketRoute);
 
 app.listen(PORT, () => {
 	console.log(`Listening on port: ${PORT}`);
