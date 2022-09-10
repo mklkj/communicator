@@ -26,13 +26,16 @@ export const getCookie = (name: string) => {
 	return null;
 };
 
-const useApp = (token: string) => {
+const useApp = (token: string, isPasswordConfirmed: boolean) => {
 	const [isLoggedIn, setLogIn] = useState<Boolean>(false);
 	const [loggedUserData, setLoggedUserData] = useState<any>(
 		getCookie("user") ? getCookie("user") : ""
 	);
-	const [type, setType] = useState<"login" | "register" | "chat">(
-		getCookie("token") || token ? "chat" : "login"
+	const isToken = getCookie("token") || token ? "chat" : "login";
+	console.log(isPasswordConfirmed, isToken);
+	const isConfirmed = isPasswordConfirmed ? isToken : "activate";
+	const [type, setType] = useState<"login" | "register" | "chat" | "activate">(
+		isConfirmed
 	);
 
 	useEffect(() => {

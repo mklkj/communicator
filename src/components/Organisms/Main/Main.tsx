@@ -16,8 +16,9 @@ type Props = {
 		setLoggedUserData: Function;
 		currentFriend: any;
 		setCurrentFriend: Function;
+		isPasswordConfirmed: boolean;
 	};
-	type: "login" | "register" | "chat";
+	type: "login" | "register" | "chat" | "activate";
 };
 
 const Main = (props: Props) => {
@@ -27,13 +28,14 @@ const Main = (props: Props) => {
 		setLoggedUserData(username);
 		setCurrentUser(id);
 	};
+	console.log(data);
 	const children = () => {
 		switch (type) {
 			case "login":
 				return (
 					<LogIn
-						onChange={(set) => {
-							setType("register");
+						onChange={(type, set) => {
+							setType(type);
 							set();
 						}}
 						onLogin={handleOnLogin}
@@ -43,8 +45,19 @@ const Main = (props: Props) => {
 				return (
 					<LogIn
 						register
-						onChange={(set) => {
-							setType("login");
+						onChange={(type, set) => {
+							setType(type);
+							set();
+						}}
+					/>
+				);
+			case "activate":
+				return (
+					<LogIn
+						// register
+						activate
+						onChange={(type, set) => {
+							setType(type);
 							set();
 						}}
 					/>

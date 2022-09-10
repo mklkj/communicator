@@ -9,6 +9,7 @@ type Props = {
 	onClick: {
 		handleOnHeaderClick: () => void;
 		handleOnSignOutClick: () => void;
+		setType: Function;
 	};
 	text?: string;
 };
@@ -16,7 +17,7 @@ type Props = {
 const Header = (props: Props) => {
 	const { className, onClick, visible, text } = props;
 	const { friendsVisible } = visible;
-	const { handleOnHeaderClick, handleOnSignOutClick } = onClick;
+	const { handleOnHeaderClick, handleOnSignOutClick, setType } = onClick;
 	const [time, setTime] = useState<any>();
 	const getTime = () => {
 		const now = new Date();
@@ -53,7 +54,14 @@ const Header = (props: Props) => {
 				<div>{text ? text : "Messenger"}</div>
 				{time && <div>Czas pracy {time}</div>}
 			</div>
-			<Button onClick={handleOnSignOutClick}>Sign Out</Button>
+			<div>
+				{text === "admin" && (
+					<Button onClick={() => setType("register")} className="button-margin">
+						Create new user
+					</Button>
+				)}
+				<Button onClick={handleOnSignOutClick}>Sign Out</Button>
+			</div>
 		</form>
 	);
 };

@@ -5,7 +5,7 @@ import Main from "./components/Organisms/Main/Main";
 import useApp, { getCookie } from "./helpers/useApp";
 
 const App = () => {
-	const { token } = useContext(AuthContext);
+	const { token, isPasswordConfirmed } = useContext(AuthContext);
 
 	const {
 		messages,
@@ -21,7 +21,7 @@ const App = () => {
 		setLoggedUserData,
 		currentFriend,
 		setCurrentFriend,
-	} = useApp(token as string);
+	} = useApp(token as string, isPasswordConfirmed);
 
 	return (
 		<div className="app">
@@ -39,6 +39,7 @@ const App = () => {
 					setLoggedUserData,
 					currentFriend,
 					setCurrentFriend,
+					isPasswordConfirmed,
 					// handleOnLoginCookie,
 				}}
 			/>

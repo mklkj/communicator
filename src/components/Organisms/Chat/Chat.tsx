@@ -20,6 +20,7 @@ type Props = {
 		setLoggedUserData: Function;
 		currentFriend: any;
 		setCurrentFriend: Function;
+		setType: Function;
 	};
 };
 
@@ -28,7 +29,6 @@ const Chat = (props: Props) => {
 
 	const { friendsVisible, handleOnHeaderClick } = useHeader();
 	const { data } = props;
-
 	const {
 		messages,
 		setMessages,
@@ -38,7 +38,9 @@ const Chat = (props: Props) => {
 		currentFriend,
 		setCurrentFriend,
 		loggedUserData,
+		setType,
 	} = data;
+	console.log(loggedUserData);
 	const messagesAreaRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -64,6 +66,7 @@ const Chat = (props: Props) => {
 				text={loggedUserData}
 				onClick={{
 					handleOnHeaderClick: handleOnHeaderClick,
+					setType,
 					handleOnSignOutClick: () => {
 						setLogIn(false);
 						document.cookie = "user=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
